@@ -9,7 +9,7 @@ from .sources import list_sources,get_adapter
 from .analyzer import classify
 from .ai import report,complete
 from . import studio,nexus,command,research,cyber,radar,discovery,memory
-from . import arena,skills,data_export,analytrix,reactor,refinery,database_studio
+from . import arena,skills,data_export,analytrix,reactor,refinery,database_studio,factory
 
 import threading,time
 from datetime import datetime
@@ -89,6 +89,9 @@ class Handler(BaseHTTPRequestHandler):
                     self.send_header('Cache-Control','no-store')
                     self.send_header('X-Content-Type-Options','nosniff')
                     self.end_headers();self.wfile.write(data);return
+                if path=='/api/factory':return self.send_json(factory.catalog())
+                if path=='/api/factory/get':return self.send_json(factory.get(q.get('id',[''])[0]))
+                if path=='/api/factory/related':return self.send_json(factory.related(q.get('source',[''])[0],q.get('id',[''])[0]))
                 if path=='/api/database/post':return self.send_json(database_studio.post(q.get('source',[''])[0],q.get('id',[''])[0]))
                 if path=='/api/database/categories':return self.send_json(database_studio.categories())
                 if path=='/api/database/catalog':return self.send_json(database_studio.catalog())
@@ -143,6 +146,7 @@ class Handler(BaseHTTPRequestHandler):
         try:
             body=self.body()
             path=urlsplit(self.path).path
+            if path=='/api/factory':return self.send_json(factory.action(body))
             if path=='/api/database/insight':return self.send_json(database_studio.insight(body))
             if path=='/api/database/copilot':return self.send_json(database_studio.copilot(body))
             if path=='/api/database/translate':return self.send_json(database_studio.translate(body))
