@@ -89,6 +89,7 @@ class Handler(BaseHTTPRequestHandler):
                     self.send_header('Cache-Control','no-store')
                     self.send_header('X-Content-Type-Options','nosniff')
                     self.end_headers();self.wfile.write(data);return
+                if path=='/api/database/post':return self.send_json(database_studio.post(q.get('source',[''])[0],q.get('id',[''])[0]))
                 if path=='/api/database/catalog':return self.send_json(database_studio.catalog())
                 if path=='/api/refinery':return self.send_json(refinery.overview())
                 if path=='/api/reactor':return self.send_json(reactor.overview())
@@ -141,6 +142,7 @@ class Handler(BaseHTTPRequestHandler):
         try:
             body=self.body()
             path=urlsplit(self.path).path
+            if path=='/api/database/translate':return self.send_json(database_studio.translate(body))
             if path=='/api/database/query':return self.send_json(database_studio.query(body.get('sql')))
             if path=='/api/skills':return self.send_json(skills.action(body))
             if path=='/api/collector':return self.send_json(configure(body))
