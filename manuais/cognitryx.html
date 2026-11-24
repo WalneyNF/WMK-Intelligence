@@ -1,0 +1,20 @@
+<!doctype html><html lang="pt-BR"><meta charset="utf-8"><title>Manual COGNITRYX</title><style>body{max-width:900px;margin:40px auto;background:#081725;color:#c5edff;font:16px system-ui}pre{background:#142d40;padding:16px;overflow:auto}</style><h1>COGNITRYX v0.1</h1><p>Abra http://127.0.0.1:8767/cognitryx.html após reiniciar o servidor. Copie a imagem aprovada para assets/cognitryx.png. Se ausente, a interface tenta usar database-lab.png.</p><h2>API REST local</h2><p>POST /api/cognitryx. JSON: question (até 500 caracteres), provider (none, ollama ou groq), consent (true obrigatório para Groq). Retorna total, communities, posts, terms, method, answer. Até oito trechos de 1800 caracteres. Não representa uma pesquisa exaustiva. SQLite mode=ro e query_only. Não exponha a API diretamente na internet.</p><h2>JavaScript</h2><pre>const r = await fetch('http://127.0.0.1:8767/api/cognitryx', {
+ method:'POST', headers:{'Content-Type':'application/json'},
+ body:JSON.stringify({question:'memória',provider:'none'})
+});
+console.log(await r.json());</pre><p>Execute no aplicativo de mesma origem ou Node.js.</p><h2>Python</h2><pre>import json, urllib.request
+req = urllib.request.Request('http://127.0.0.1:8767/api/cognitryx',
+ data=json.dumps({'question':'memória','provider':'none'}).encode(),
+ headers={'Content-Type':'application/json'})
+with urllib.request.urlopen(req, timeout=100) as r:
+ print(json.load(r))</pre><h2>PHP</h2><pre>&lt;?php
+$c = curl_init('http://127.0.0.1:8767/api/cognitryx');
+curl_setopt_array($c, [
+ CURLOPT_POST => true,
+ CURLOPT_HTTPHEADER => ['Content-Type: application/json'],
+ CURLOPT_POSTFIELDS => json_encode(['question'=>'memória','provider'=>'none']),
+ CURLOPT_RETURNTRANSFER => true,
+ CURLOPT_TIMEOUT => 100
+]);
+echo curl_exec($c);
+curl_close($c);</pre><h2>Limitações</h2><p>Busca lexical OR, tradução de poucos termos, sem embeddings, histórico ou execução automática. Respostas da IA podem conter erros. Groq recebe os trechos selecionados mediante confirmação; Ollama permanece local. Não houve teste integrado nesta publicação.</p><footer>Walney Moreira Klein — walneyk@hotmail.com</footer></html>
