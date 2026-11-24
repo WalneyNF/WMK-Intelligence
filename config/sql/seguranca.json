@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "queries": [
+    {
+      "id": "example-8",
+      "category": "Segurança",
+      "name": "Avaliações de risco",
+      "description": "Risco lexical não comprova incidente.",
+      "sql": "SELECT i.source,i.id,i.title,a.risk,i.source_url FROM items i JOIN assessments_v2 a ON i.source=a.source AND i.id=a.post_id ORDER BY a.risk DESC LIMIT 50"
+    }
+  ]
+}
