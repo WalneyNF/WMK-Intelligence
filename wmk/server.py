@@ -133,11 +133,11 @@ class Handler(BaseHTTPRequestHandler):
         if path not in ('/cognitryx.html','/cognitryx.js','/cognitryx.png','/index.html','/app.js','/style.css','/logo.svg','/wmk_logo.png','/wmk_logo_capa.png','/arena.html','/arena.js','/arena-manual.html','/propostas.html','/nexus.html','/nexus.js','/nexus-manual.html','/command.html','/command.css','/command.js','/research.html','/research.js','/cyber.html','/cyber.js','/cyber-manual.html','/radar.html','/radar.js','/radar-manual.html','/discovery.html','/discovery.js','/discovery-manual.html','/memory.html','/memory.js','/memory-manual.html','/skills.html','/skills.js','/export.html','/analytrix.html','/analytrix.js','/reactor.html','/reactor.js','/coretrix.png','/nexus-brain.jpg','/refinery.html','/refinery.js','/refinery-manual.html','/prime.html','/prime.js','/labs.html','/labs.js','/living.html','/living.js','/scene-brain.svg','/scene-dna.svg','/scene-network.svg','/scene-globe.svg','/scene-galaxy.svg','/scene-reactor.svg','/scene-factory.svg','/scene-archive.svg','/scene-time.svg','/database-studio.html','/database-studio.js','/operations.html','/operations.js','/database-lab.png'):
             return self.send_json({'erro':'Arquivo não encontrado'},404)
         target=ROOT/'assets'/path.lstrip('/') if path in ('/cognitryx.png','/logo.svg','/wmk_logo.png','/wmk_logo_capa.png','/coretrix.png','/nexus-brain.jpg','/database-lab.png') else ROOT/'web'/path.lstrip('/')
-        if not target.is_file():return self.send_json({'erro':'Arquivo não encontrado'},404)
-        data=target.read_bytes()
         if path=='/cognitryx.png' and not target.is_file():
             target=ROOT/'web'/'scene-brain.svg'
             path='/scene-brain.svg'
+        if not target.is_file():return self.send_json({'erro':'Arquivo não encontrado'},404)
+        data=target.read_bytes()
         content_type='text/html' if path.endswith('.html') else 'text/javascript' if path.endswith('.js') else 'text/css' if path.endswith('.css') else 'image/png' if path.endswith('.png') else 'image/jpeg' if path.endswith(('.jpg','.jpeg')) else 'image/svg+xml'
         self.send_response(200)
         self.send_header('Content-Type',content_type if content_type.startswith('image/') else content_type+'; charset=utf-8')
