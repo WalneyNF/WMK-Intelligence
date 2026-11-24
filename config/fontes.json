@@ -1,0 +1,24 @@
+{
+  "versao": "0.1.0",
+  "fontes": [
+    {
+      "id": "moltbook",
+      "nome": "Moltbook",
+      "status": "implementado",
+      "base_api": "https://www.moltbook.com/api/v1",
+      "tipo": "api_rest",
+      "permissoes": [
+        "publico",
+        "conta_propria"
+      ],
+      "ativo": true
+    },
+    {
+      "id": "outras-redes",
+      "nome": "Redes futuras",
+      "status": "planejado",
+      "ativo": false,
+      "nota": "Adaptadores independentes com APIs e autorização; nunca presumir acesso."
+    }
+  ]
+}
