@@ -1,0 +1,23 @@
+<!doctype html><html lang="pt-BR"><meta charset="utf-8"><title>WMK Open Knowledge API v1</title><style>body{background:#091827;color:#d5eaf5;font:16px/1.6 system-ui;max-width:950px;margin:30px auto;padding:20px}h1,h2{color:#65eaff}pre{background:#102b40;padding:16px;overflow:auto}td,th{padding:8px;border:1px solid #34566a}table{border-collapse:collapse}</style><h1>WMK Open Knowledge API v1</h1><p>API REST JSON de leitura para aplicações externas. Serviço independente do coletor.</p><h2>Instalação Windows</h2><p>Gere uma chave com <code>py -3 -c "import secrets; print(secrets.token_urlsafe(32))"</code>. Acrescente ao .env existente, sem apagar outras configurações:</p><pre>WMK_OPEN_API_KEY=COLE_SUA_CHAVE_AQUI
+WMK_OPEN_PORT=8768
+WMK_OPEN_SOURCES=</pre><p>Preencha WMK_OPEN_SOURCES com identificadores de fontes separados por vírgula somente após verificar autorização de redistribuição. Sem fontes autorizadas não são retornados registros. Execute na raiz:</p><pre>py -3 -m wmk.public_api</pre><p>Base: http://127.0.0.1:8768/api/open/v1. Todos os GET exigem Authorization: Bearer SUA_CHAVE.</p><h2>Endpoints</h2><table><tr><th>GET</th><th>Parâmetros</th></tr><tr><td>/health</td><td>Estado do serviço</td></tr><tr><td>/sources</td><td>Fontes autorizadas e contagem</td></tr><tr><td>/stats</td><td>Total de registros e fontes</td></tr><tr><td>/posts</td><td>source, page, limit (1–100)</td></tr><tr><td>/post</td><td>source, id; item null quando ausente</td></tr><tr><td>/search</td><td>q obrigatório, source, page, limit</td></tr></table><p>Busca textual por termos no título e corpo (LIKE), não semântica. Resposta contém metadados e URL original, sem corpo, autor ou JSON bruto. Paginação por offset; novas coletas podem deslocar páginas.</p><h2>JavaScript (Node.js 18+)</h2><pre>const r = await fetch('http://127.0.0.1:8768/api/open/v1/search?q=python', {
+  headers: {Authorization: 'Bearer ' + process.env.WMK_OPEN_API_KEY}
+});
+if (!r.ok) throw new Error('HTTP ' + r.status);
+console.log(await r.json());</pre><h2>Python (biblioteca padrão)</h2><pre>import os, json, urllib.request
+url = 'http://127.0.0.1:8768/api/open/v1/search?q=python'
+req = urllib.request.Request(url, headers={
+    'Authorization': 'Bearer ' + os.environ['WMK_OPEN_API_KEY']})
+with urllib.request.urlopen(req, timeout=10) as r:
+    print(json.load(r))</pre><h2>PHP 8 com cURL</h2><pre>&lt;?php
+$c = curl_init('http://127.0.0.1:8768/api/open/v1/search?q=python');
+curl_setopt_array($c, [
+ CURLOPT_RETURNTRANSFER =&gt; true,
+ CURLOPT_TIMEOUT =&gt; 10,
+ CURLOPT_HTTPHEADER =&gt; ['Authorization: Bearer '.getenv('WMK_OPEN_API_KEY')]
+]);
+$body = curl_exec($c);
+$status = curl_getinfo($c, CURLINFO_HTTP_CODE);
+curl_close($c);
+if ($status !== 200 || $body === false) throw new RuntimeException('Falha HTTP '.$status);
+print_r(json_decode($body, true));</pre><h2>Celulares e aplicações web</h2><p>O serviço escuta somente localhost. Para acesso remoto use um gateway HTTPS autenticado com limitação de requisições, controle de acesso e registros de auditoria. Nunca exponha a porta administrativa 8767. Não embuta a chave compartilhada em JavaScript de navegador ou aplicativo distribuído; use seu backend intermediário. CORS não está habilitado. Não exponha o servidor de desenvolvimento diretamente à internet.</p><h2>Erros</h2><p>400 parâmetros inválidos; 401 credencial ausente ou inválida; 404 rota inexistente; 405 escrita não permitida; 503 banco indisponível ou consulta demorada.</p><h2>Governança</h2><p>Informação pública não equivale a licença de redistribuição. Revise termos das fontes, direitos autorais, LGPD, retenção e exclusão. Títulos também podem conter dados pessoais; revise antes de habilitar uma fonte. MIT cobre o software, não os dados de terceiros.</p><p>Walney Moreira Klein — walneyk@hotmail.com · MIT</p>
