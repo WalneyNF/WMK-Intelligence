@@ -1,0 +1,11 @@
+<!doctype html><html lang="pt-BR"><meta charset="utf-8"><title>WMK Data Export Studio</title><h1>WMK Data Export Studio</h1><p>Walney Moreira Klein — walneyk@hotmail.com</p><p>Atualize o projeto, preserve dados e .env, reinicie e abra http://127.0.0.1:8767/export.html. Selecione conjunto, formato, fonte, limite e deslocamento. A memória é aberta mode=ro e query_only. Não exporta raw_json nem autor; textos ainda podem conter dados pessoais. Verifique direitos de reutilização.</p><h2>API local</h2><pre>GET /api/export?dataset=posts&amp;format=json&amp;limit=1000&amp;offset=0</pre><p>Conjuntos posts, comments, assessments, memory. Formatos json, jsonl, csv, sql. Máximo 10000 registros e aproximadamente 16 milhões de caracteres por lote. Lotes independentes podem mudar durante coleta; pause coleta/indexação para consistência entre lotes. SQL específico SQLite; importe em banco separado. CSV neutraliza possíveis fórmulas, alterando essas células. JSON preserva texto. Não exponha endpoint administrativo na internet.</p><h2>Python</h2><pre>import json, urllib.request
+url = "http://127.0.0.1:8767/api/export?dataset=posts&amp;format=json"
+with urllib.request.urlopen(url) as r:
+    posts = json.load(r)
+print(len(posts))</pre><h2>JavaScript (mesma origem)</h2><pre>const r = await fetch('/api/export?dataset=posts&amp;format=json');
+if (!r.ok) throw Error('Falha');
+console.log(await r.json());</pre><h2>PHP</h2><pre>&lt;?php
+$data = file_get_contents('http://127.0.0.1:8767/api/export?dataset=posts&amp;format=json');
+if ($data === false) exit('Falha');
+$posts = json_decode($data, true, 512, JSON_THROW_ON_ERROR);
+echo count($posts);</pre><h2>SQL</h2><p>Abra um novo banco no DB Browser for SQLite e execute o arquivo SQL exportado. A tabela será wmk_export_posts ou equivalente. Não execute no banco original. Não há deduplicação automática na importação.</p><p>Testes de execução pendentes. Parquet e cópia SQLite integral são evoluções futuras.</p></html>
