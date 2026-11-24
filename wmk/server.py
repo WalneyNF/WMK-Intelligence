@@ -90,6 +90,7 @@ class Handler(BaseHTTPRequestHandler):
                     self.send_header('X-Content-Type-Options','nosniff')
                     self.end_headers();self.wfile.write(data);return
                 if path=='/api/database/post':return self.send_json(database_studio.post(q.get('source',[''])[0],q.get('id',[''])[0]))
+                if path=='/api/database/categories':return self.send_json(database_studio.categories())
                 if path=='/api/database/catalog':return self.send_json(database_studio.catalog())
                 if path=='/api/refinery':return self.send_json(refinery.overview())
                 if path=='/api/reactor':return self.send_json(reactor.overview())
