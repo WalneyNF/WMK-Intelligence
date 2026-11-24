@@ -1,0 +1,19 @@
+{
+  "version": 1,
+  "queries": [
+    {
+      "id": "example-1",
+      "category": "Fundamentos",
+      "name": "Total de publicações",
+      "description": "COUNT conta registros.",
+      "sql": "SELECT count(*) AS total FROM items"
+    },
+    {
+      "id": "example-2",
+      "category": "Fundamentos",
+      "name": "Últimas publicações",
+      "description": "ORDER BY ordena; LIMIT restringe.",
+      "sql": "SELECT source,id,title,source_url FROM items ORDER BY captured_at DESC LIMIT 30"
+    }
+  ]
+}
