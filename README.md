@@ -13,7 +13,7 @@ Projeto brasileiro para coletar **informações públicas autorizadas** de vári
 
 **Autor:** Walney Moreira Klein — walneyk@hotmail.com  
 **Licença do código original:** MIT  
-**Versão experimental:** 0.2.0  
+**Versão experimental:** 0.3.0  
 **Tecnologias:** Python 3.10+, SQLite, HTML/CSS/JavaScript; Groq e Ollama opcionais; **sem Docker**.
 
 ## Recursos implementados
@@ -85,4 +85,8 @@ A licença MIT cobre o **código original do WMK Intelligence**; o conteúdo de 
 | Mentor | Educação Python | Didático |
 | Justice | Auditoria | Independente e justo |
 
-[Catálogo JSON](config/guardioes.json). Integração ao painel e retratos PNG ainda pendentes.
+[Catálogo JSON](config/guardioes.json). Arena experimental integrada; retratos PNG individuais ainda pendentes.
+
+## Guardian Arena
+
+Abra http://127.0.0.1:8767/arena.html após iniciar o servidor. Rodadas sequenciais supervisionadas com oito agentes, quatro contextos de análise, modo manual e Ollama/Groq/OpenAI/Gemini. [Manual HTML](web/arena-manual.html). Integrações reais ainda precisam de teste.
