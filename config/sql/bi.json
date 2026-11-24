@@ -1,0 +1,26 @@
+{
+  "version": 1,
+  "queries": [
+    {
+      "id": "example-3",
+      "category": "BI",
+      "name": "Comunidades mais ativas",
+      "description": "GROUP BY agrega por comunidade.",
+      "sql": "SELECT community,count(*) AS total FROM items GROUP BY community ORDER BY total DESC"
+    },
+    {
+      "id": "example-4",
+      "category": "BI",
+      "name": "Coleta por dia",
+      "description": "date extrai a data de coleta.",
+      "sql": "SELECT date(captured_at) AS dia,count(*) AS total FROM items GROUP BY date(captured_at) ORDER BY dia DESC"
+    },
+    {
+      "id": "example-5",
+      "category": "BI",
+      "name": "Fontes",
+      "description": "Contagem por origem.",
+      "sql": "SELECT source,count(*) AS total FROM items GROUP BY source ORDER BY total DESC"
+    }
+  ]
+}
