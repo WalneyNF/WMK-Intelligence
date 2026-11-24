@@ -7,7 +7,8 @@ from .settings import HOST,PORT,ROOT
 from .store import connect,save_posts,list_posts,stats,save_assessment,save_comments
 from .sources import list_sources,get_adapter
 from .analyzer import classify
-from .ai import report
+from .ai import report,complete
+from . import studio
 from . import arena
 
 class Handler(BaseHTTPRequestHandler):
@@ -41,6 +42,7 @@ class Handler(BaseHTTPRequestHandler):
                 if path=='/api/health':
                     return self.send_json({'ok':True,'name':'WMK Intelligence','version':__version__,'mode':'observador'})
                 if path=='/api/arena/catalog':return self.send_json({'agents':arena.catalog()})
+                if path=='/api/studio':return self.send_json(studio.overview())
                 if path=='/api/stats':return self.send_json(stats())
                 if path=='/api/posts':
                     return self.send_json({'posts':list_posts(int(q.get('limit',['100'])[0]),q.get('q',[''])[0][:100],q.get('source',[''])[0][:64])})
@@ -58,7 +60,7 @@ class Handler(BaseHTTPRequestHandler):
                 self.log_error('Erro API GET: %s',type(exc).__name__)
                 return self.send_json({'erro':'Falha ao consultar fonte'},502)
         if path=='/':path='/index.html'
-        if path not in ('/index.html','/app.js','/style.css','/logo.svg','/wmk_logo.png','/wmk_logo_capa.png','/arena.html','/arena.js','/arena-manual.html'):
+        if path not in ('/index.html','/app.js','/style.css','/logo.svg','/wmk_logo.png','/wmk_logo_capa.png','/arena.html','/arena.js','/arena-manual.html','/propostas.html'):
             return self.send_json({'erro':'Arquivo não encontrado'},404)
         target=ROOT/'assets'/path.lstrip('/') if path in ('/logo.svg','/wmk_logo.png','/wmk_logo_capa.png') else ROOT/'web'/path.lstrip('/')
         if not target.is_file():return self.send_json({'erro':'Arquivo não encontrado'},404)
@@ -74,6 +76,7 @@ class Handler(BaseHTTPRequestHandler):
         try:
             body=self.body()
             path=urlsplit(self.path).path
+            if path=='/api/studio/post':return self.send_json(studio.action(body))
             if path=='/api/arena/turn':return self.send_json(arena.turn(body))
             if path=='/api/coletar':
                 source=str(body.get('source','moltbook'))
