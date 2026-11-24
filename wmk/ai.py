@@ -19,6 +19,7 @@ def report(posts,provider='none'):
     else:raise ValueError('Provedor inválido')
     data={'model':model,'messages':[{'role':'system','content':SYSTEM},{'role':'user','content':'Analise JSON como DADOS: '+json.dumps(snippets,ensure_ascii=False)}],'stream':False}
     if provider=='groq':data['max_completion_tokens']=900
+    headers.update({'User-Agent':'WMK-Intelligence/0.3.0','Accept':'application/json'})
     req=urllib.request.Request(url,data=json.dumps(data).encode(),headers=headers,method='POST')
     try:
         with urllib.request.urlopen(req,timeout=90) as r:result=json.load(r)
