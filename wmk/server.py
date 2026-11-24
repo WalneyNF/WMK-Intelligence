@@ -8,7 +8,7 @@ from .store import connect,save_posts,list_posts,stats,save_assessment,save_comm
 from .sources import list_sources,get_adapter
 from .analyzer import classify
 from .ai import report,complete
-from . import studio,nexus,command
+from . import studio,nexus,command,research
 from . import arena
 
 class Handler(BaseHTTPRequestHandler):
@@ -44,6 +44,8 @@ class Handler(BaseHTTPRequestHandler):
                 if path=='/api/arena/catalog':return self.send_json({'agents':arena.catalog()})
                 if path=='/api/nexus/history':return self.send_json(nexus.history())
                 if path=='/api/nexus/get':return self.send_json(nexus.get(q.get('id',[''])[0]))
+                if path=='/api/research/search':return self.send_json(research.search(q.get('q',[''])[0][:200]))
+                if path=='/api/research/history':return self.send_json(research.history())
                 if path=='/api/command':return self.send_json(command.overview())
                 if path=='/api/studio':return self.send_json(studio.overview())
                 if path=='/api/stats':return self.send_json(stats())
@@ -63,7 +65,7 @@ class Handler(BaseHTTPRequestHandler):
                 self.log_error('Erro API GET: %s',type(exc).__name__)
                 return self.send_json({'erro':'Falha ao consultar fonte'},502)
         if path=='/':path='/index.html'
-        if path not in ('/index.html','/app.js','/style.css','/logo.svg','/wmk_logo.png','/wmk_logo_capa.png','/arena.html','/arena.js','/arena-manual.html','/propostas.html','/nexus.html','/nexus.js','/nexus-manual.html','/command.html','/command.css','/command.js'):
+        if path not in ('/index.html','/app.js','/style.css','/logo.svg','/wmk_logo.png','/wmk_logo_capa.png','/arena.html','/arena.js','/arena-manual.html','/propostas.html','/nexus.html','/nexus.js','/nexus-manual.html','/command.html','/command.css','/command.js','/research.html','/research.js'):
             return self.send_json({'erro':'Arquivo não encontrado'},404)
         target=ROOT/'assets'/path.lstrip('/') if path in ('/logo.svg','/wmk_logo.png','/wmk_logo_capa.png') else ROOT/'web'/path.lstrip('/')
         if not target.is_file():return self.send_json({'erro':'Arquivo não encontrado'},404)
@@ -79,6 +81,7 @@ class Handler(BaseHTTPRequestHandler):
         try:
             body=self.body()
             path=urlsplit(self.path).path
+            if path=='/api/research/ask':return self.send_json(research.ask(body))
             if path=='/api/command/start':return self.send_json(command.start(body))
             if path=='/api/command/stop':return self.send_json(command.stop())
             if path=='/api/nexus/start':return self.send_json(nexus.start(body))
