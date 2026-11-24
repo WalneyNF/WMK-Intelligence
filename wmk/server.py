@@ -11,6 +11,45 @@ from .ai import report,complete
 from . import studio,nexus,command,research,cyber
 from . import arena
 
+import threading,time
+from datetime import datetime
+collection_lock=threading.Lock()
+schedule_lock=threading.Lock()
+wake=threading.Event()
+schedule={'enabled':False,'minutes':10,'next':None,'last':None,'message':'Desativado','busy':False}
+def collect_once(body):
+    source=str(body.get('source','moltbook'))
+    adapter=get_adapter(source)
+    items=adapter.collect(limit=max(1,min(int(body.get('limit',25)),100)))
+    added=save_posts(items,source)
+    for item in items:
+        result=classify(str(item.get('title') or '')+' '+str(item.get('body') or ''))
+        save_assessment(item['id'],result['risk'],result['terms'],source)
+    return {'source':source,'obtidas':len(items),'novas':added,'total':stats()}
+
+def configure(body):
+    minutes=int(body.get('minutes',10))
+    if not 10<=minutes<=1440:raise ValueError('Intervalo entre 10 e 1440 minutos')
+    with schedule_lock:
+        schedule.update(enabled=body.get('enabled') is True,minutes=minutes,next=time.time() if body.get('enabled') is True else None,message='Agendado' if body.get('enabled') is True else 'Desativado')
+        wake.set()
+        return dict(schedule)
+def collector_loop():
+    while True:
+        with schedule_lock:
+            due=schedule['enabled'] and schedule['next'] is not None and time.time()>=schedule['next']
+            if due:schedule['busy']=True
+        if not due:
+            wake.wait(1);wake.clear();continue
+        try:
+            with collection_lock:
+                result=collect_once({'source':'moltbook','limit':25})
+            message=f"{result['obtidas']} recebidas; {result['novas']} novas"
+        except Exception as exc:
+            message='Falha na coleta: '+type(exc).__name__
+        with schedule_lock:
+            schedule.update(busy=False,last=datetime.now().isoformat(timespec='seconds'),message=message,next=time.time()+schedule['minutes']*60 if schedule['enabled'] else None)
+
 class Handler(BaseHTTPRequestHandler):
     def send_json(self,payload,status=200):
         blob=json.dumps(payload,ensure_ascii=False).encode()
@@ -47,6 +86,8 @@ class Handler(BaseHTTPRequestHandler):
                 if path=='/api/research/search':return self.send_json(research.search(q.get('q',[''])[0][:200]))
                 if path=='/api/research/history':return self.send_json(research.history())
                 if path=='/api/cyber':return self.send_json(cyber.overview())
+                if path=='/api/collector':
+                    with schedule_lock:return self.send_json(dict(schedule))
                 if path=='/api/command':return self.send_json(command.overview())
                 if path=='/api/studio':return self.send_json(studio.overview())
                 if path=='/api/stats':return self.send_json(stats())
@@ -82,6 +123,7 @@ class Handler(BaseHTTPRequestHandler):
         try:
             body=self.body()
             path=urlsplit(self.path).path
+            if path=='/api/collector':return self.send_json(configure(body))
             if path=='/api/cyber/analyze':return self.send_json(cyber.analyze(body))
             if path=='/api/research/ask':return self.send_json(research.ask(body))
             if path=='/api/command/start':return self.send_json(command.start(body))
@@ -91,14 +133,7 @@ class Handler(BaseHTTPRequestHandler):
             if path=='/api/studio/post':return self.send_json(studio.action(body))
             if path=='/api/arena/turn':return self.send_json(arena.turn(body))
             if path=='/api/coletar':
-                source=str(body.get('source','moltbook'))
-                adapter=get_adapter(source)
-                items=adapter.collect(limit=max(1,min(int(body.get('limit',25)),100)))
-                added=save_posts(items,source)
-                for item in items:
-                    result=classify(str(item.get('title') or '')+' '+str(item.get('body') or ''))
-                    save_assessment(item['id'],result['risk'],result['terms'],source)
-                return self.send_json({'source':source,'obtidas':len(items),'novas':added,'total':stats()})
+                with collection_lock:return self.send_json(collect_once(body))
             if path=='/api/comments':
                 source=str(body.get('source','moltbook'))
                 adapter=get_adapter(source)
@@ -125,5 +160,6 @@ def main():
     if HOST not in ('127.0.0.1','localhost'):raise ValueError('Somente localhost')
     db=connect();db.close()
     print(f'WMK Intelligence {__version__} — http://{HOST}:{PORT}')
+    threading.Thread(target=collector_loop,daemon=True).start()
     ThreadingHTTPServer((HOST,PORT),Handler).serve_forever()
 if __name__=='__main__':main()
