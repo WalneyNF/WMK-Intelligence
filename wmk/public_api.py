@@ -19,6 +19,18 @@ def query(path,q):
             allowed=[s.strip() for s in os.getenv('WMK_OPEN_SOURCES','').split(',') if s.strip()][:50]
             if not allowed:return {'items':[],'notice':'Nenhuma fonte autorizada para compartilhamento'}
             scope='source IN ('+','.join('?' for _ in allowed)+')'
+            if path=='/categories':
+                from collections import Counter
+                counts=Counter()
+                indexed=0
+                exists=db.execute("SELECT 1 FROM sqlite_master WHERE name='knowledge_memory' AND type='table'").fetchone()
+                if exists:
+                    for row in db.execute('SELECT topics FROM knowledge_memory WHERE '+scope,allowed):
+                        indexed+=1
+                        try: tags=json.loads(row[0] or '{}')
+                        except (ValueError,TypeError): tags={}
+                        counts.update(tags.keys() if isinstance(tags,dict) and tags else ['Não classificado'])
+                return {'items':[{'category':k,'total':v} for k,v in counts.most_common()],'indexed':indexed,'multi_label':True}
             if path=='/sources':
                 return {'items':[dict(x) for x in db.execute('SELECT source,count(*) AS total FROM items WHERE '+scope+' GROUP BY source',allowed)]}
             if path=='/stats':
@@ -31,6 +43,12 @@ def query(path,q):
             words=re.findall(r'\w+',arg('q')[:200])[:12]
             where=scope+' AND (?=\'\' OR source=?)'
             params=allowed+[source,source]
+            category=arg('category')[:120]
+            if category:
+                if not db.execute("SELECT 1 FROM sqlite_master WHERE name='knowledge_memory' AND type='table'").fetchone():return {'items':[],'page':page,'limit':limit,'has_more':False}
+                safe="CASE WHEN json_valid(m.topics) THEN m.topics ELSE '{}' END"
+                where+=' AND EXISTS (SELECT 1 FROM knowledge_memory m WHERE m.source=items.source AND m.id=items.id AND '+("("+safe+" = '{}' OR m.topics IS NULL)" if category=='Não classificado' else 'json_type('+safe+',?) IS NOT NULL')+')'
+                if category!='Não classificado':params+=['$.'+json.dumps(category,ensure_ascii=False)]
             if path=='/search':
                 if not words:raise ValueError('Informe q')
                 for word in words:
