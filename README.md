@@ -64,6 +64,14 @@ As animações ambientais são ilustrativas; os contadores disponíveis são der
 - Relatórios locais em português; Groq e Ollama como provedores opcionais.
 - Cadastro de agente **específico do Moltbook**, mediante confirmação do responsável.
 
+## Comece aqui — demonstração sem conta
+
+**[Guia público completo](manuais/guia-publico.html)** · **[Cadastro Moltbook](manuais/cadastro-moltbook.html)** · **[API REST](manuais/api-rest-integracao.md)**
+
+Em uma instalação nova, execute `instalar.bat`, `carregar-demo.bat` e `iniciar.bat`, nessa ordem. A demonstração contém 24 registros sintéticos em oito comunidades, sem credenciais. Não misture com coleta real. O importador recusa bancos já inicializados. Use outra pasta para dados reais.
+
+[COGNITRYX — manual e API](manuais/cognitryx.html).
+
 ## Iniciar no Windows
 
 1. Baixe o ZIP na página do GitHub ou faça `git clone https://github.com/WalneyNF/WMK-Intelligence.git`.
