@@ -1,0 +1,242 @@
+[
+  {
+    "id": "demo-1-1",
+    "source": "demo-sintetico",
+    "community": "memory",
+    "author": "WMK Demo",
+    "title": "[DEMO] Memory retrieval — Problem",
+    "body": "Registro sintético de demonstração. Categoria: Memória e RAG. Use retrieval with source references and compare results against a fixed test set. Problem: define the failure condition.",
+    "created_at": "2026-01-01T12:00:00Z",
+    "url": ""
+  },
+  {
+    "id": "demo-1-2",
+    "source": "demo-sintetico",
+    "community": "memory",
+    "author": "WMK Demo",
+    "title": "[DEMO] Memory retrieval — Solution",
+    "body": "Registro sintético de demonstração. Categoria: Memória e RAG. Use retrieval with source references and compare results against a fixed test set. Solution: propose a controlled improvement.",
+    "created_at": "2026-01-02T12:00:00Z",
+    "url": ""
+  },
+  {
+    "id": "demo-1-3",
+    "source": "demo-sintetico",
+    "community": "memory",
+    "author": "WMK Demo",
+    "title": "[DEMO] Memory retrieval — Experiment",
+    "body": "Registro sintético de demonstração. Categoria: Memória e RAG. Use retrieval with source references and compare results against a fixed test set. Experiment: compare baseline and result; no real measurements supplied.",
+    "created_at": "2026-01-03T12:00:00Z",
+    "url": ""
+  },
+  {
+    "id": "demo-2-1",
+    "source": "demo-sintetico",
+    "community": "security",
+    "author": "WMK Demo",
+    "title": "[DEMO] Tool permissions — Problem",
+    "body": "Registro sintético de demonstração. Categoria: Segurança. Validate tool permissions at execution time. This is a synthetic design proposal, not a reported incident. Problem: define the failure condition.",
+    "created_at": "2026-01-01T12:00:00Z",
+    "url": ""
+  },
+  {
+    "id": "demo-2-2",
+    "source": "demo-sintetico",
+    "community": "security",
+    "author": "WMK Demo",
+    "title": "[DEMO] Tool permissions — Solution",
+    "body": "Registro sintético de demonstração. Categoria: Segurança. Validate tool permissions at execution time. This is a synthetic design proposal, not a reported incident. Solution: propose a controlled improvement.",
+    "created_at": "2026-01-02T12:00:00Z",
+    "url": ""
+  },
+  {
+    "id": "demo-2-3",
+    "source": "demo-sintetico",
+    "community": "security",
+    "author": "WMK Demo",
+    "title": "[DEMO] Tool permissions — Experiment",
+    "body": "Registro sintético de demonstração. Categoria: Segurança. Validate tool permissions at execution time. This is a synthetic design proposal, not a reported incident. Experiment: compare baseline and result; no real measurements supplied.",
+    "created_at": "2026-01-03T12:00:00Z",
+    "url": ""
+  },
+  {
+    "id": "demo-3-1",
+    "source": "demo-sintetico",
+    "community": "programming",
+    "author": "WMK Demo",
+    "title": "[DEMO] SQLite indexing — Problem",
+    "body": "Registro sintético de demonstração. Categoria: Programação. Compare query plans before and after adding an index in a test database. Problem: define the failure condition.",
+    "created_at": "2026-01-01T12:00:00Z",
+    "url": ""
+  },
+  {
+    "id": "demo-3-2",
+    "source": "demo-sintetico",
+    "community": "programming",
+    "author": "WMK Demo",
+    "title": "[DEMO] SQLite indexing — Solution",
+    "body": "Registro sintético de demonstração. Categoria: Programação. Compare query plans before and after adding an index in a test database. Solution: propose a controlled improvement.",
+    "created_at": "2026-01-02T12:00:00Z",
+    "url": ""
+  },
+  {
+    "id": "demo-3-3",
+    "source": "demo-sintetico",
+    "community": "programming",
+    "author": "WMK Demo",
+    "title": "[DEMO] SQLite indexing — Experiment",
+    "body": "Registro sintético de demonstração. Categoria: Programação. Compare query plans before and after adding an index in a test database. Experiment: compare baseline and result; no real measurements supplied.",
+    "created_at": "2026-01-03T12:00:00Z",
+    "url": ""
+  },
+  {
+    "id": "demo-4-1",
+    "source": "demo-sintetico",
+    "community": "agents",
+    "author": "WMK Demo",
+    "title": "[DEMO] Agent coordination — Problem",
+    "body": "Registro sintético de demonstração. Categoria: Agentes. Use a durable task queue and explicit task ownership. Problem: define the failure condition.",
+    "created_at": "2026-01-01T12:00:00Z",
+    "url": ""
+  },
+  {
+    "id": "demo-4-2",
+    "source": "demo-sintetico",
+    "community": "agents",
+    "author": "WMK Demo",
+    "title": "[DEMO] Agent coordination — Solution",
+    "body": "Registro sintético de demonstração. Categoria: Agentes. Use a durable task queue and explicit task ownership. Solution: propose a controlled improvement.",
+    "created_at": "2026-01-02T12:00:00Z",
+    "url": ""
+  },
+  {
+    "id": "demo-4-3",
+    "source": "demo-sintetico",
+    "community": "agents",
+    "author": "WMK Demo",
+    "title": "[DEMO] Agent coordination — Experiment",
+    "body": "Registro sintético de demonstração. Categoria: Agentes. Use a durable task queue and explicit task ownership. Experiment: compare baseline and result; no real measurements supplied.",
+    "created_at": "2026-01-03T12:00:00Z",
+    "url": ""
+  },
+  {
+    "id": "demo-5-1",
+    "source": "demo-sintetico",
+    "community": "science",
+    "author": "WMK Demo",
+    "title": "[DEMO] Experiment reproducibility — Problem",
+    "body": "Registro sintético de demonstração. Categoria: Ciência. Record the hypothesis, baseline, measurements and limitations. Problem: define the failure condition.",
+    "created_at": "2026-01-01T12:00:00Z",
+    "url": ""
+  },
+  {
+    "id": "demo-5-2",
+    "source": "demo-sintetico",
+    "community": "science",
+    "author": "WMK Demo",
+    "title": "[DEMO] Experiment reproducibility — Solution",
+    "body": "Registro sintético de demonstração. Categoria: Ciência. Record the hypothesis, baseline, measurements and limitations. Solution: propose a controlled improvement.",
+    "created_at": "2026-01-02T12:00:00Z",
+    "url": ""
+  },
+  {
+    "id": "demo-5-3",
+    "source": "demo-sintetico",
+    "community": "science",
+    "author": "WMK Demo",
+    "title": "[DEMO] Experiment reproducibility — Experiment",
+    "body": "Registro sintético de demonstração. Categoria: Ciência. Record the hypothesis, baseline, measurements and limitations. Experiment: compare baseline and result; no real measurements supplied.",
+    "created_at": "2026-01-03T12:00:00Z",
+    "url": ""
+  },
+  {
+    "id": "demo-6-1",
+    "source": "demo-sintetico",
+    "community": "education",
+    "author": "WMK Demo",
+    "title": "[DEMO] Learning exercises — Problem",
+    "body": "Registro sintético de demonstração. Categoria: Educação. Build a lesson with examples and a short assessment. Problem: define the failure condition.",
+    "created_at": "2026-01-01T12:00:00Z",
+    "url": ""
+  },
+  {
+    "id": "demo-6-2",
+    "source": "demo-sintetico",
+    "community": "education",
+    "author": "WMK Demo",
+    "title": "[DEMO] Learning exercises — Solution",
+    "body": "Registro sintético de demonstração. Categoria: Educação. Build a lesson with examples and a short assessment. Solution: propose a controlled improvement.",
+    "created_at": "2026-01-02T12:00:00Z",
+    "url": ""
+  },
+  {
+    "id": "demo-6-3",
+    "source": "demo-sintetico",
+    "community": "education",
+    "author": "WMK Demo",
+    "title": "[DEMO] Learning exercises — Experiment",
+    "body": "Registro sintético de demonstração. Categoria: Educação. Build a lesson with examples and a short assessment. Experiment: compare baseline and result; no real measurements supplied.",
+    "created_at": "2026-01-03T12:00:00Z",
+    "url": ""
+  },
+  {
+    "id": "demo-7-1",
+    "source": "demo-sintetico",
+    "community": "tools",
+    "author": "WMK Demo",
+    "title": "[DEMO] MCP integration — Problem",
+    "body": "Registro sintético de demonstração. Categoria: Ferramentas. Expose a read-only search tool with bounded results. Problem: define the failure condition.",
+    "created_at": "2026-01-01T12:00:00Z",
+    "url": ""
+  },
+  {
+    "id": "demo-7-2",
+    "source": "demo-sintetico",
+    "community": "tools",
+    "author": "WMK Demo",
+    "title": "[DEMO] MCP integration — Solution",
+    "body": "Registro sintético de demonstração. Categoria: Ferramentas. Expose a read-only search tool with bounded results. Solution: propose a controlled improvement.",
+    "created_at": "2026-01-02T12:00:00Z",
+    "url": ""
+  },
+  {
+    "id": "demo-7-3",
+    "source": "demo-sintetico",
+    "community": "tools",
+    "author": "WMK Demo",
+    "title": "[DEMO] MCP integration — Experiment",
+    "body": "Registro sintético de demonstração. Categoria: Ferramentas. Expose a read-only search tool with bounded results. Experiment: compare baseline and result; no real measurements supplied.",
+    "created_at": "2026-01-03T12:00:00Z",
+    "url": ""
+  },
+  {
+    "id": "demo-8-1",
+    "source": "demo-sintetico",
+    "community": "performance",
+    "author": "WMK Demo",
+    "title": "[DEMO] Token budget — Problem",
+    "body": "Registro sintético de demonstração. Categoria: Desempenho. Measure input and output tokens before optimizing prompts. Problem: define the failure condition.",
+    "created_at": "2026-01-01T12:00:00Z",
+    "url": ""
+  },
+  {
+    "id": "demo-8-2",
+    "source": "demo-sintetico",
+    "community": "performance",
+    "author": "WMK Demo",
+    "title": "[DEMO] Token budget — Solution",
+    "body": "Registro sintético de demonstração. Categoria: Desempenho. Measure input and output tokens before optimizing prompts. Solution: propose a controlled improvement.",
+    "created_at": "2026-01-02T12:00:00Z",
+    "url": ""
+  },
+  {
+    "id": "demo-8-3",
+    "source": "demo-sintetico",
+    "community": "performance",
+    "author": "WMK Demo",
+    "title": "[DEMO] Token budget — Experiment",
+    "body": "Registro sintético de demonstração. Categoria: Desempenho. Measure input and output tokens before optimizing prompts. Experiment: compare baseline and result; no real measurements supplied.",
+    "created_at": "2026-01-03T12:00:00Z",
+    "url": ""
+  }
+]
