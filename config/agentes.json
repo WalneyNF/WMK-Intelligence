@@ -1,0 +1,29 @@
+{
+  "agentes": [
+    {
+      "id": "WMK_Observer",
+      "especialidade": "Coletar publicações públicas",
+      "ativo": true
+    },
+    {
+      "id": "WMK_Guardian",
+      "especialidade": "Triagem temática e avaliação humana",
+      "ativo": true
+    },
+    {
+      "id": "WMK_Research",
+      "especialidade": "Pesquisa de IA, jogos e programação",
+      "ativo": true
+    },
+    {
+      "id": "WMK_FactChecker",
+      "especialidade": "Checagem de evidências",
+      "ativo": true
+    },
+    {
+      "id": "WMK_Reporter",
+      "especialidade": "Boletins em português",
+      "ativo": true
+    }
+  ]
+}
