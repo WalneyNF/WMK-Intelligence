@@ -8,7 +8,7 @@ from .store import connect,save_posts,list_posts,stats,save_assessment,save_comm
 from .sources import list_sources,get_adapter
 from .analyzer import classify
 from .ai import report,complete
-from . import studio,nexus,command,research,cyber,radar,discovery
+from . import studio,nexus,command,research,cyber,radar,discovery,memory
 from . import arena
 
 import threading,time
@@ -85,6 +85,7 @@ class Handler(BaseHTTPRequestHandler):
                 if path=='/api/nexus/get':return self.send_json(nexus.get(q.get('id',[''])[0]))
                 if path=='/api/research/search':return self.send_json(research.search(q.get('q',[''])[0][:200]))
                 if path=='/api/research/history':return self.send_json(research.history())
+                if path=='/api/memory':return self.send_json(memory.search(q.get('q',[''])[0],int(q.get('page',['1'])[0])))
                 if path=='/api/discovery':return self.send_json(discovery.overview())
                 if path=='/api/radar':return self.send_json(radar.overview())
                 if path=='/api/cyber':return self.send_json(cyber.overview())
@@ -109,7 +110,7 @@ class Handler(BaseHTTPRequestHandler):
                 self.log_error('Erro API GET: %s',type(exc).__name__)
                 return self.send_json({'erro':'Falha ao consultar fonte'},502)
         if path=='/':path='/index.html'
-        if path not in ('/index.html','/app.js','/style.css','/logo.svg','/wmk_logo.png','/wmk_logo_capa.png','/arena.html','/arena.js','/arena-manual.html','/propostas.html','/nexus.html','/nexus.js','/nexus-manual.html','/command.html','/command.css','/command.js','/research.html','/research.js','/cyber.html','/cyber.js','/cyber-manual.html','/radar.html','/radar.js','/radar-manual.html','/discovery.html','/discovery.js','/discovery-manual.html'):
+        if path not in ('/index.html','/app.js','/style.css','/logo.svg','/wmk_logo.png','/wmk_logo_capa.png','/arena.html','/arena.js','/arena-manual.html','/propostas.html','/nexus.html','/nexus.js','/nexus-manual.html','/command.html','/command.css','/command.js','/research.html','/research.js','/cyber.html','/cyber.js','/cyber-manual.html','/radar.html','/radar.js','/radar-manual.html','/discovery.html','/discovery.js','/discovery-manual.html','/memory.html','/memory.js','/memory-manual.html'):
             return self.send_json({'erro':'Arquivo não encontrado'},404)
         target=ROOT/'assets'/path.lstrip('/') if path in ('/logo.svg','/wmk_logo.png','/wmk_logo_capa.png') else ROOT/'web'/path.lstrip('/')
         if not target.is_file():return self.send_json({'erro':'Arquivo não encontrado'},404)
@@ -163,5 +164,6 @@ def main():
     db=connect();db.close()
     print(f'WMK Intelligence {__version__} — http://{HOST}:{PORT}')
     threading.Thread(target=collector_loop,daemon=True).start()
+    threading.Thread(target=memory.worker,daemon=True).start()
     ThreadingHTTPServer((HOST,PORT),Handler).serve_forever()
 if __name__=='__main__':main()
