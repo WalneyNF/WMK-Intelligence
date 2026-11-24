@@ -9,7 +9,7 @@ from .sources import list_sources,get_adapter
 from .analyzer import classify
 from .ai import report,complete
 from . import studio,nexus,command,research,cyber,radar,discovery,memory
-from . import arena,skills,data_export,analytrix,reactor,refinery,database_studio,factory,cognitryx,neural_labs,sql_library
+from . import arena,skills,data_export,analytrix,reactor,refinery,database_studio,factory,cognitryx,neural_labs,sql_library,learning_lab
 
 import threading,time
 from datetime import datetime
@@ -97,6 +97,8 @@ class Handler(BaseHTTPRequestHandler):
                 if path=='/api/factory/related':return self.send_json(factory.related(q.get('source',[''])[0],q.get('id',[''])[0]))
                 if path=='/api/database/post':return self.send_json(database_studio.post(q.get('source',[''])[0],q.get('id',[''])[0]))
                 if path=='/api/database/categories':return self.send_json(database_studio.categories())
+                if path=='/api/learning/catalog':return self.send_json(learning_lab.catalog())
+                if path=='/api/learning/books':return self.send_json(learning_lab.list_books())
                 if path=='/api/sql-library':return self.send_json(sql_library.catalog())
                 if path=='/api/database/catalog':return self.send_json(database_studio.catalog())
                 if path=='/api/refinery':return self.send_json(refinery.overview())
@@ -134,7 +136,7 @@ class Handler(BaseHTTPRequestHandler):
                 return self.send_json({'erro':'Falha ao consultar fonte'},502)
         if path=='/assets/nexus-brain.jpg':path='/nexus-brain.jpg'
         if path=='/':path='/prime.html'
-        if path not in ('/sql-library.html','/sql-library.js','/universe.html','/universe.js','/council.html','/council.js','/cognitryx.html','/cognitryx.js','/cognitryx.png','/index.html','/app.js','/style.css','/logo.svg','/wmk_logo.png','/wmk_logo_capa.png','/arena.html','/arena.js','/arena-manual.html','/propostas.html','/nexus.html','/nexus.js','/nexus-manual.html','/command.html','/command.css','/command.js','/research.html','/research.js','/cyber.html','/cyber.js','/cyber-manual.html','/radar.html','/radar.js','/radar-manual.html','/discovery.html','/discovery.js','/discovery-manual.html','/memory.html','/memory.js','/memory-manual.html','/skills.html','/skills.js','/export.html','/analytrix.html','/analytrix.js','/reactor.html','/reactor.js','/coretrix.png','/nexus-brain.jpg','/refinery.html','/refinery.js','/refinery-manual.html','/prime.html','/prime.js','/labs.html','/labs.js','/living.html','/living.js','/scene-brain.svg','/scene-dna.svg','/scene-network.svg','/scene-globe.svg','/scene-galaxy.svg','/scene-reactor.svg','/scene-factory.svg','/scene-archive.svg','/scene-time.svg','/database-studio.html','/database-studio.js','/operations.html','/operations.js','/database-lab.png'):
+        if path not in ('/learning-lab.html','/learning-lab.js','/sql-library.html','/sql-library.js','/universe.html','/universe.js','/council.html','/council.js','/cognitryx.html','/cognitryx.js','/cognitryx.png','/index.html','/app.js','/style.css','/logo.svg','/wmk_logo.png','/wmk_logo_capa.png','/arena.html','/arena.js','/arena-manual.html','/propostas.html','/nexus.html','/nexus.js','/nexus-manual.html','/command.html','/command.css','/command.js','/research.html','/research.js','/cyber.html','/cyber.js','/cyber-manual.html','/radar.html','/radar.js','/radar-manual.html','/discovery.html','/discovery.js','/discovery-manual.html','/memory.html','/memory.js','/memory-manual.html','/skills.html','/skills.js','/export.html','/analytrix.html','/analytrix.js','/reactor.html','/reactor.js','/coretrix.png','/nexus-brain.jpg','/refinery.html','/refinery.js','/refinery-manual.html','/prime.html','/prime.js','/labs.html','/labs.js','/living.html','/living.js','/scene-brain.svg','/scene-dna.svg','/scene-network.svg','/scene-globe.svg','/scene-galaxy.svg','/scene-reactor.svg','/scene-factory.svg','/scene-archive.svg','/scene-time.svg','/database-studio.html','/database-studio.js','/operations.html','/operations.js','/database-lab.png'):
             return self.send_json({'erro':'Arquivo não encontrado'},404)
         target=ROOT/'assets'/path.lstrip('/') if path in ('/cognitryx.png','/logo.svg','/wmk_logo.png','/wmk_logo_capa.png','/coretrix.png','/nexus-brain.jpg','/database-lab.png') else ROOT/'web'/path.lstrip('/')
         if path=='/cognitryx.png' and not target.is_file():
@@ -160,6 +162,9 @@ class Handler(BaseHTTPRequestHandler):
             if path=='/api/database/insight':return self.send_json(database_studio.insight(body))
             if path=='/api/database/copilot':return self.send_json(database_studio.copilot(body))
             if path=='/api/database/translate':return self.send_json(database_studio.translate(body))
+            if path=='/api/learning/run':return self.send_json(learning_lab.run(body))
+            if path=='/api/learning/code':return self.send_json(learning_lab.code(body.get('id')))
+            if path=='/api/learning/notebook':return self.send_json(learning_lab.notebook(body))
             if path=='/api/sql-library':return self.send_json(sql_library.action(body))
             if path=='/api/database/query':return self.send_json(database_studio.query(body.get('sql')))
             if path=='/api/skills':return self.send_json(skills.action(body))
