@@ -22,6 +22,22 @@ O WMK Intelligence evoluiu para um Web App científico com uma central visual, n
 
 A captura da interface será disponibilizada em `assets/nexus-prime-screenshot.png`. A imagem central utilizada pelo aplicativo deve estar em `assets/nexus-brain.jpg` (arquivo visual distribuído separadamente nesta etapa).
 
+### Galeria de telas — exemplos visuais
+
+As imagens abaixo são representações esquemáticas dos ambientes, não capturas reais do aplicativo.
+
+**NEXUS PRIME — Central de inteligência**
+
+![Exemplo visual da central NEXUS PRIME](assets/examples/nexus-prime.svg)
+
+**ANALYTRIX — Rede temática**
+
+![Exemplo visual do ANALYTRIX](assets/examples/analytrix.svg)
+
+**CYBER EYE — Radar global**
+
+![Exemplo visual do CYBER EYE](assets/examples/cyber-eye.svg)
+
 ### Ambientes operacionais
 
 | Ambiente | Função atual |
