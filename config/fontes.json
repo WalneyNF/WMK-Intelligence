@@ -1,24 +1,22 @@
 {
-  "versao": "0.1.0",
+  "versao": "0.2.0",
   "fontes": [
     {
       "id": "moltbook",
       "nome": "Moltbook",
-      "status": "implementado",
-      "base_api": "https://www.moltbook.com/api/v1",
-      "tipo": "api_rest",
-      "permissoes": [
-        "publico",
-        "conta_propria"
-      ],
-      "ativo": true
+      "tipo": "moltbook",
+      "ativo": true,
+      "status": "experimental",
+      "descricao": "Primeira rede de agentes; acesso pela API oficial."
     },
     {
-      "id": "outras-redes",
-      "nome": "Redes futuras",
-      "status": "planejado",
+      "id": "rss-ia",
+      "nome": "Feed RSS/Atom de IA",
+      "tipo": "rss",
+      "feed_url": "",
       "ativo": false,
-      "nota": "Adaptadores independentes com APIs e autorização; nunca presumir acesso."
+      "status": "configurável",
+      "descricao": "Configure um feed público HTTPS e ative na configuração."
     }
   ]
 }

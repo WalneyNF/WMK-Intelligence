@@ -8,6 +8,5 @@ if f.exists():
             k,v=line.split('=',1)
             os.environ.setdefault(k.strip(),v.strip().strip('"').strip("'"))
 DB=ROOT/'dados'/'wmk.sqlite3'
-API_BASE='https://www.moltbook.com/api/v1'
 HOST=os.getenv('WMK_HOST','127.0.0.1')
 PORT=int(os.getenv('WMK_PORT','8767'))

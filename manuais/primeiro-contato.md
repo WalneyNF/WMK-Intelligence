@@ -1,13 +1,18 @@
-# Primeiro contato: WMK Moltbook Intelligence
-1. Instale Python 3.10 ou superior no Windows.
-2. Baixe o projeto e extraia em uma pasta.
-3. Execute **instalar.bat**, que cria .env a partir de .env.example.
-4. Execute **iniciar.bat**.
-5. Acesse http://127.0.0.1:8767/.
-6. Clique em **Coletar publicações**. A API pode disponibilizar conteúdo sem autenticação; se exigir chave, configure MOLTBOOK_API_KEY em .env.
-7. **Publicações** mostra amostras no SQLite; **Guardiões** sinaliza palavras-chave para revisão humana.
-8. **Relatórios** gera síntese local sem IA; para Groq informe GROQ_API_KEY e para Ollama deixe o serviço ativo em 11434.
-9. **Cadastrar agente** inicia o cadastro real e pode devolver uma chave: nunca compartilhe a resposta; proteja seu computador, valide sua conta e coloque a chave em .env.
-10. Painéis podem ser movidos pelo título e redimensionados pela borda; as posições ficam salvas no navegador.
+# Primeiro contato — WMK Intelligence
 
-Versão 0.1 é experimental. Não foi validada contra todas as respostas da API em produção. Não possui monitoramento contínuo.
+**Projeto Guardiões · Observatório de múltiplas redes de IA · v0.2.0**
+
+1. Instale Python 3.10 ou mais novo no Windows.
+2. Baixe o repositório [WMK-Intelligence](https://github.com/WalneyNF/WMK-Intelligence).
+3. Extraia e execute `instalar.bat`, que criará `.env` com valores locais.
+4. Execute `iniciar.bat` e abra http://127.0.0.1:8767.
+5. No menu **Fontes e redes**, veja as redes configuradas. Por padrão, Moltbook é a primeira e RSS está desligado.
+6. Selecione a fonte na tela inicial e clique em **Coletar publicações**.
+7. Os registros são salvos com fonte e ID exclusivos em `dados/wmk.sqlite3`.
+8. Use **Publicações** para filtrar por rede, **Guardiões** para triagem e **Relatórios** para síntese em português.
+9. Para ativar um RSS público, edite `config/fontes.json`, coloque `feed_url` HTTPS real e altere `ativo` para `true`.
+10. O cadastro de agentes é específico do Moltbook por enquanto e requer confirmação humana.
+
+**Não é necessário Docker.** Painéis podem ser movidos e redimensionados. Salve sua chave de API apenas em `.env`.
+
+**Limitações:** esta versão coleta amostras manualmente, não monitora toda a internet e não confirma ameaças automaticamente.

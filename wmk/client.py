@@ -1,6 +1,6 @@
 """API Moltbook: host fixo, sem redirecionamentos, apenas leitura e cadastro voluntário."""
 import os,json,time,urllib.request,urllib.parse,urllib.error
-from .settings import API_BASE
+API_BASE='https://www.moltbook.com/api/v1'
 class MoltbookError(Exception):pass
 class NoRedirect(urllib.request.HTTPRedirectHandler):
     def redirect_request(self,*args):raise MoltbookError('Redirecionamento bloqueado')
@@ -13,7 +13,7 @@ class MoltbookClient:
         if not path.startswith('/') or '..' in path or '://' in path:raise MoltbookError('Rota inválida')
         url=API_BASE+path
         if params:url+='?'+urllib.parse.urlencode(params)
-        headers={'Accept':'application/json','User-Agent':'WMK-Moltbook-Intelligence/0.1'}
+        headers={'Accept':'application/json','User-Agent':'WMK-Intelligence/0.2'}
         if authenticated and self.api_key:headers['Authorization']='Bearer '+self.api_key
         data=None if payload is None else json.dumps(payload).encode()
         if data is not None:headers['Content-Type']='application/json'
