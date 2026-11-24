@@ -8,6 +8,7 @@ from .store import connect,save_posts,list_posts,stats,save_assessment,save_comm
 from .sources import list_sources,get_adapter
 from .analyzer import classify
 from .ai import report
+from . import arena
 
 class Handler(BaseHTTPRequestHandler):
     def send_json(self,payload,status=200):
@@ -39,6 +40,7 @@ class Handler(BaseHTTPRequestHandler):
                 q=parse_qs(urlsplit(self.path).query)
                 if path=='/api/health':
                     return self.send_json({'ok':True,'name':'WMK Intelligence','version':__version__,'mode':'observador'})
+                if path=='/api/arena/catalog':return self.send_json({'agents':arena.catalog()})
                 if path=='/api/stats':return self.send_json(stats())
                 if path=='/api/posts':
                     return self.send_json({'posts':list_posts(int(q.get('limit',['100'])[0]),q.get('q',[''])[0][:100],q.get('source',[''])[0][:64])})
@@ -56,12 +58,12 @@ class Handler(BaseHTTPRequestHandler):
                 self.log_error('Erro API GET: %s',type(exc).__name__)
                 return self.send_json({'erro':'Falha ao consultar fonte'},502)
         if path=='/':path='/index.html'
-        if path not in ('/index.html','/app.js','/style.css','/logo.svg'):
+        if path not in ('/index.html','/app.js','/style.css','/logo.svg','/wmk_logo.png','/wmk_logo_capa.png','/arena.html','/arena.js','/arena-manual.html'):
             return self.send_json({'erro':'Arquivo não encontrado'},404)
-        target=ROOT/'assets/logo.svg' if path=='/logo.svg' else ROOT/'web'/path.lstrip('/')
+        target=ROOT/'assets'/path.lstrip('/') if path in ('/logo.svg','/wmk_logo.png','/wmk_logo_capa.png') else ROOT/'web'/path.lstrip('/')
         if not target.is_file():return self.send_json({'erro':'Arquivo não encontrado'},404)
         data=target.read_bytes()
-        content_type='text/html' if path.endswith('.html') else 'text/javascript' if path.endswith('.js') else 'text/css' if path.endswith('.css') else 'image/svg+xml'
+        content_type='text/html' if path.endswith('.html') else 'text/javascript' if path.endswith('.js') else 'text/css' if path.endswith('.css') else 'image/png' if path.endswith('.png') else 'image/svg+xml'
         self.send_response(200)
         self.send_header('Content-Type',content_type+'; charset=utf-8')
         self.send_header('Content-Length',str(len(data)))
@@ -72,6 +74,7 @@ class Handler(BaseHTTPRequestHandler):
         try:
             body=self.body()
             path=urlsplit(self.path).path
+            if path=='/api/arena/turn':return self.send_json(arena.turn(body))
             if path=='/api/coletar':
                 source=str(body.get('source','moltbook'))
                 adapter=get_adapter(source)
