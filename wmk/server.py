@@ -142,6 +142,7 @@ class Handler(BaseHTTPRequestHandler):
         try:
             body=self.body()
             path=urlsplit(self.path).path
+            if path=='/api/database/copilot':return self.send_json(database_studio.copilot(body))
             if path=='/api/database/translate':return self.send_json(database_studio.translate(body))
             if path=='/api/database/query':return self.send_json(database_studio.query(body.get('sql')))
             if path=='/api/skills':return self.send_json(skills.action(body))
