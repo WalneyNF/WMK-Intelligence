@@ -1,0 +1,38 @@
+"""Explorador local somente leitura. SQL limitado a tabelas de conhecimento."""
+import sqlite3,time
+from contextlib import closing
+from .settings import DB
+TABLES=('items','comments_v2','assessments_v2','knowledge_memory')
+def connect_ro():
+    c=sqlite3.connect(DB.resolve().as_uri()+'?mode=ro',uri=True,timeout=3)
+    c.row_factory=sqlite3.Row
+    c.execute('PRAGMA query_only=ON')
+    c.enable_load_extension(False)
+    return c
+def catalog():
+    with closing(connect_ro()) as c:
+        out=[]
+        for t in TABLES:
+            if not c.execute("SELECT 1 FROM sqlite_master WHERE type='table' AND name=?",(t,)).fetchone():continue
+            cols=[dict(x) for x in c.execute('PRAGMA table_info('+t+')')]
+            out.append({'name':t,'count':c.execute('SELECT count(*) FROM '+t).fetchone()[0],'columns':cols})
+        return {'tables':out,'sources':[dict(x) for x in c.execute('SELECT source,count(*) AS total FROM items GROUP BY source ORDER BY total DESC')],'communities':[dict(x) for x in c.execute('SELECT community,count(*) AS total FROM items GROUP BY community ORDER BY total DESC LIMIT 20')]}
+def query(sql):
+    if not isinstance(sql,str) or not sql.strip() or len(sql)>8000:raise ValueError('Consulta inválida')
+    with closing(connect_ro()) as c:
+        functions={'count','sum','avg','min','max','length','substr','substring','lower','upper','coalesce','ifnull','round','date','strftime','like','trim','replace','abs','typeof','group_concat','nullif','instr','total'}
+        def authorize(action,a,b,db,trigger):
+            if action==sqlite3.SQLITE_SELECT:return sqlite3.SQLITE_OK
+            if action==sqlite3.SQLITE_READ and db=='main' and a in TABLES:return sqlite3.SQLITE_OK
+            if action==sqlite3.SQLITE_FUNCTION and (b or '').lower() in functions:return sqlite3.SQLITE_OK
+            return sqlite3.SQLITE_DENY
+        c.set_authorizer(authorize)
+        c.setlimit(sqlite3.SQLITE_LIMIT_LENGTH,2000000)
+        deadline=time.monotonic()+3
+        c.set_progress_handler(lambda:int(time.monotonic()>deadline),1000)
+        try:
+            cur=c.execute(sql)
+            cols=[x[0] for x in cur.description]
+            rows=cur.fetchmany(201)
+            return {'columns':cols,'rows':[[str(v)[:12000] if v is not None else None for v in row] for row in rows[:200]],'truncated':len(rows)>200}
+        except sqlite3.Error as e:raise ValueError('Consulta recusada ou inválida: '+str(e)) from e
