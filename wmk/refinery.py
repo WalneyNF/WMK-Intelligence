@@ -18,8 +18,9 @@ def refresh():
         topics=[dict(x) for x in c.execute('SELECT name,count(*) AS n FROM topic GROUP BY name ORDER BY n DESC,name')]
         kinds=[dict(x) for x in c.execute('SELECT name,count(*) AS n FROM kind GROUP BY name ORDER BY n DESC,name')]
         pairs=[dict(x) for x in c.execute("""SELECT t.name,count(*) AS n FROM topic t JOIN kind k ON t.source=k.source AND t.id=k.id WHERE k.name='Problema' AND t.name!='Não classificado' GROUP BY t.name ORDER BY n DESC LIMIT 20""")]
+        timeline=[dict(x) for x in c.execute("SELECT substr(captured,1,10) AS day,count(*) AS n FROM results WHERE captured IS NOT NULL GROUP BY day ORDER BY day DESC LIMIT 30")]
         candidates=[dict(x) for x in c.execute("""SELECT r.source,r.id,r.title,r.url,r.topics,r.kinds,r.captured FROM results r WHERE EXISTS(SELECT 1 FROM kind k WHERE k.source=r.source AND k.id=r.id AND k.name IN ('Problema','Solução','Experimento','Hipótese','Ferramenta')) ORDER BY r.captured DESC LIMIT 80""")]
-    data={'total':total,'topics':topics,'kinds':kinds,'problem_topics':pairs,'candidates':candidates,'updated':datetime.now(timezone.utc).isoformat(),'method':'lexical-v1'}
+    data={'total':total,'timeline':timeline,'topics':topics,'kinds':kinds,'problem_topics':pairs,'candidates':candidates,'updated':datetime.now(timezone.utc).isoformat(),'method':'lexical-v1'}
     DEST.parent.mkdir(parents=True,exist_ok=True)
     with closing(sqlite3.connect(DEST,timeout=5)) as c, c:
         c.execute('CREATE TABLE IF NOT EXISTS snapshot(id INTEGER PRIMARY KEY CHECK(id=1),payload TEXT NOT NULL)')
