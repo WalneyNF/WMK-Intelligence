@@ -32,6 +32,10 @@ def start(body):
     provider=body.get('provider','groq')
     if provider not in ('groq','ollama'):raise ValueError('Provedor inválido')
     posts=list_posts(limit=300)
+    if body.get('id'):
+        c=connect()
+        try:posts=[dict(row) for row in c.execute('SELECT * FROM items WHERE source=? AND id=?',(str(body.get('source','')),str(body['id'])))]
+        finally:c.close()
     words=set(re.findall(r'\w{3,}',goal.lower()))
     def score(p):return len(words & set(re.findall(r'\w{3,}',(p['title']+' '+p['body']).lower())))
     posts=sorted(posts,key=score,reverse=True)[:max(1,min(8,int(body.get('limit',5))))]
