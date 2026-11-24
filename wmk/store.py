@@ -18,17 +18,21 @@ def connect():
         source TEXT NOT NULL,id TEXT NOT NULL,post_id TEXT,body TEXT,raw_json TEXT,captured_at TEXT,
         PRIMARY KEY(source,id));
       CREATE INDEX IF NOT EXISTS idx_items_time ON items(captured_at DESC);
+      CREATE TABLE IF NOT EXISTS migrations(name TEXT PRIMARY KEY,applied_at TEXT);
     """)
     tables={r[0] for r in db.execute("SELECT name FROM sqlite_master WHERE type='table'")}
-    if 'posts' in tables:
+    migrated=db.execute("SELECT 1 FROM migrations WHERE name='legacy_v01'").fetchone()
+    if not migrated and 'posts' in tables:
         db.execute("""INSERT OR IGNORE INTO items SELECT
          'moltbook',id,title,body,author,submolt,source_url,created_at,captured_at,raw_json FROM posts""")
-    if 'assessments' in tables:
+    if not migrated and 'assessments' in tables:
         db.execute("""INSERT OR IGNORE INTO assessments_v2 SELECT
          'moltbook',post_id,risk,terms,summary,updated_at FROM assessments""")
-    if 'comments' in tables:
+    if not migrated and 'comments' in tables:
         db.execute("""INSERT OR IGNORE INTO comments_v2 SELECT
          'moltbook',id,post_id,body,raw_json,captured_at FROM comments""")
+    if not migrated:
+        db.execute("INSERT OR IGNORE INTO migrations VALUES (?,?)",('legacy_v01',now()))
     db.commit();return db
 def save_posts(items,source=''):
     db=connect();added=0

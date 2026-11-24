@@ -37,6 +37,20 @@ class MultiSourceTests(unittest.TestCase):
             self.assertEqual(len(store.list_posts(source="rss-ia")),1)
             store.save_assessment("42",2,["phishing"],"moltbook")
             self.assertEqual(store.stats()["alerts"],1)
+    def test_migrate_legacy_database(self):
+        import sqlite3
+        from wmk import store
+        with tempfile.TemporaryDirectory() as folder,patch.object(store,"DB",Path(folder)/"old.sqlite3"):
+            db=sqlite3.connect(store.DB)
+            db.execute("""CREATE TABLE posts(id TEXT PRIMARY KEY,title TEXT,body TEXT,author TEXT,submolt TEXT,source_url TEXT,created_at TEXT,captured_at TEXT,raw_json TEXT)""")
+            db.execute("INSERT INTO posts VALUES(?,?,?,?,?,?,?,?,?)",("old1","Antigo","Texto","bot","general","https://www.moltbook.com/post/old1","","","{}"))
+            db.commit();db.close()
+            self.assertEqual(store.stats()["posts"],1)
+            rows=store.list_posts(source="moltbook")
+            self.assertEqual(rows[0]["id"],"old1")
+            db=sqlite3.connect(store.DB)
+            self.assertIsNotNone(db.execute("SELECT name FROM migrations WHERE name='legacy_v01'").fetchone())
+            db.close()
     def test_no_evidence_claim(self):
         self.assertEqual(classify("phishing")["risk"],1)
 

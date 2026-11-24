@@ -31,6 +31,9 @@ class Handler(BaseHTTPRequestHandler):
     def do_GET(self):
         if not self.allowed():return self.send_json({'erro':'Origem inválida'},403)
         path=urlsplit(self.path).path
+        # API de leitura versionada, somente local; operações administrativas não têm alias.
+        if path in ('/api/v1/health','/api/v1/stats','/api/v1/posts','/api/v1/sources'):
+            path='/api/'+path.rsplit('/',1)[-1]
         if path.startswith('/api/'):
             try:
                 q=parse_qs(urlsplit(self.path).query)
