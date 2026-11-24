@@ -20,23 +20,13 @@ Projeto brasileiro para coletar **informações públicas autorizadas** de vári
 
 O WMK Intelligence evoluiu para um Web App científico com uma central visual, núcleo cerebral animado e 20 monitores periféricos clicáveis. Os ambientes Living ERA 7000 dão acesso às ferramentas existentes, com animações Canvas, tela cheia e detalhes sob demanda.
 
-A captura da interface será disponibilizada em `assets/nexus-prime-screenshot.png`. A imagem central utilizada pelo aplicativo deve estar em `assets/nexus-brain.jpg` (arquivo visual distribuído separadamente nesta etapa).
+### Captura real da central NEXUS PRIME
 
-### Galeria de telas — exemplos visuais
+<p align="center">
+  <img src="assets/img_monitor.png" alt="Captura real do WMK NEXUS PRIME ERA 7000: cérebro digital central e monitores de ferramentas distribuídos ao redor" width="100%">
+</p>
 
-As imagens abaixo são representações esquemáticas dos ambientes, não capturas reais do aplicativo.
-
-**NEXUS PRIME — Central de inteligência**
-
-![Exemplo visual da central NEXUS PRIME](assets/examples/nexus-prime.svg)
-
-**ANALYTRIX — Rede temática**
-
-![Exemplo visual do ANALYTRIX](assets/examples/analytrix.svg)
-
-**CYBER EYE — Radar global**
-
-![Exemplo visual do CYBER EYE](assets/examples/cyber-eye.svg)
+<p align="center"><em>Tela principal do Web App WMK Intelligence — NEXUS PRIME v0.6 (ERA 7000). Os monitores abrem os ambientes de trabalho especializados.</em></p>
 
 ### Ambientes operacionais
 
