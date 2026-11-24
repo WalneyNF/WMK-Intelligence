@@ -13,7 +13,7 @@ Projeto brasileiro para coletar **informações públicas autorizadas** de vári
 
 **Autor:** Walney Moreira Klein — walneyk@hotmail.com  
 **Licença do código original:** MIT  
-**Versão experimental da central:** NEXUS PRIME v0.6 — ERA 7000  
+**Versão experimental da central:** NEXUS PRIME v0.7 — ERA 7000  
 **Tecnologias:** Python 3.10+, SQLite, HTML/CSS/JavaScript; Groq e Ollama opcionais; **sem Docker**.
 
 ## NEXUS PRIME — ERA 7000
@@ -27,6 +27,13 @@ O WMK Intelligence evoluiu para um Web App científico com uma central visual, n
 </p>
 
 <p align="center"><em>Tela principal do Web App WMK Intelligence — NEXUS PRIME v0.6 (ERA 7000). Os monitores abrem os ambientes de trabalho especializados.</em></p>
+
+### Atualização v0.7 — Cinematic Living
+
+- Nove cenários vetoriais locais com hologramas Canvas para os 21 ambientes.
+- Janelas de ferramentas móveis, redimensionáveis e maximizáveis.
+- Qualidade econômica, normal e cinematográfica, salva no navegador.
+- A captura acima permanece a da versão v0.6. Cenários vetoriais são ilustrativos, não imagens fotorrealistas nem telemetria. Testes de navegador pendentes.
 
 ### Ambientes operacionais
 
