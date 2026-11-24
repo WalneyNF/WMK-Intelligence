@@ -1,0 +1,19 @@
+{
+  "version": 1,
+  "queries": [
+    {
+      "id": "example-6",
+      "category": "Memória",
+      "name": "Cobertura de indexação",
+      "description": "LEFT JOIN encontra registros sem índice.",
+      "sql": "SELECT count(*) AS pendentes FROM items i LEFT JOIN knowledge_memory m ON i.source=m.source AND i.id=m.id WHERE m.id IS NULL"
+    },
+    {
+      "id": "example-7",
+      "category": "Memória",
+      "name": "Temas indexados",
+      "description": "Pesquisa lexical nas etiquetas JSON.",
+      "sql": "SELECT i.source,i.id,i.title,m.topics,i.source_url FROM items i JOIN knowledge_memory m ON i.source=m.source AND i.id=m.id WHERE m.topics LIKE '%Programação%' LIMIT 100"
+    }
+  ]
+}
