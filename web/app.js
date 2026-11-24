@@ -6,8 +6,40 @@ async function posts(){try{const data=await request('/api/posts?q='+encodeURICom
 async function agents(){try{const a=await request('/api/agents');$('agentList').replaceChildren(...a.agentes.map(x=>el('p',x.id+': '+x.especialidade)))}catch(e){$('agentList').textContent=e.message}}
 $('collect').onclick=async()=>{let b=$('collect');b.disabled=true;$('collectStatus').textContent=' Consultando...';try{const r=await request('/api/coletar',{limit:25,source:$('sourceSelect').value});$('collectStatus').textContent=r.obtidas+' itens, '+r.novas+' novos';await Promise.all([metrics(),posts()])}catch(e){$('collectStatus').textContent=e.message}finally{b.disabled=false}};
 $('refresh').onclick=posts;$('search').oninput=()=>{clearTimeout(window.findTimer);window.findTimer=setTimeout(posts,300)};
-$('report').onclick=async()=>{try{$('reportText').textContent='Gerando...';const r=await request('/api/relatorio',{provider:$('provider').value,source:$('sourceFilter').value});$('reportText').textContent=r.texto}catch(e){$('reportText').textContent=e.message}};
-$('downloadReport').onclick=()=>{let blob=new Blob([$('reportText').textContent],{type:'text/plain;charset=utf-8'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='wmk-relatorio.txt';a.click();URL.revokeObjectURL(url)};
+let reportRaw='', reportPlain=false;
+function inlineMd(node,value){
+  for(const part of value.split(/(\*\*[^*]+\*\*|\x60[^\x60]+\x60|\*[^*]+\*)/g)){
+    if(part.startsWith('**')&&part.endsWith('**')&&part.length>4)node.append(el('strong',part.slice(2,-2)));
+    else if(part.startsWith('*')&&part.endsWith('*')&&part.length>2)node.append(el('em',part.slice(1,-1)));
+    else if(part.charCodeAt(0)===96&&part.charCodeAt(part.length-1)===96)node.append(el('code',part.slice(1,-1)));
+    else node.append(document.createTextNode(part));
+  }
+}
+function renderReport(){
+  const out=$('reportText');out.replaceChildren();
+  if(!reportRaw){out.textContent='Nenhum relatório gerado.';return}
+  if(reportPlain){out.append(el('pre',reportRaw));return}
+  const lines=reportRaw.split(/\r?\n/);let list=null;
+  const cells=line=>line.trim().replace(/^\||\|$/g,'').split('|').map(x=>x.trim());
+  for(let i=0;i<lines.length;i++){
+    const line=lines[i].trim();if(!line){list=null;continue}
+    if(line.startsWith('|')&&i+1<lines.length&&/^\s*\|?[\s:|-]+$/.test(lines[i+1])&&lines[i+1].includes('---')){
+      list=null;const table=el('table'),head=table.createTHead().insertRow();for(const c of cells(line)){const th=el('th');inlineMd(th,c);head.append(th)}
+      i++;const body=table.createTBody();while(i+1<lines.length&&lines[i+1].trim().startsWith('|')){const row=body.insertRow();for(const c of cells(lines[++i]))inlineMd(row.insertCell(),c)}out.append(table);continue;
+    }
+    const h=line.match(/^(#{1,6})\s+(.*)$/),li=line.match(/^([-*]|\d+\.)\s+(.*)$/);
+    if(li){const tag=/^\d/.test(li[1])?'ol':'ul';if(!list||list.tagName.toLowerCase()!==tag){list=el(tag);out.append(list)}const item=el('li');inlineMd(item,li[2]);list.append(item);continue}
+    list=null;const n=el(h?'h'+h[1].length:'p');inlineMd(n,h?h[2]:line);out.append(n);
+  }
+}
+$('report').onclick=async()=>{const b=$('report');b.disabled=true;$('clearReport').disabled=true;$('reportStatus').textContent='Gerando...';try{const r=await request('/api/relatorio',{provider:$('provider').value,source:$('sourceFilter').value});reportRaw=r.texto||'';renderReport();$('reportStatus').textContent='Relatório gerado.'}catch(e){$('reportStatus').textContent=e.message}finally{b.disabled=false;$('clearReport').disabled=false}};
+$('toggleReport').onclick=()=>{reportPlain=!reportPlain;renderReport()};
+$('clearReport').onclick=()=>{reportRaw='';renderReport();$('reportStatus').textContent='Relatório limpo.'};
+$('copyReport').onclick=async()=>{if(!reportRaw)return;try{await navigator.clipboard.writeText(reportRaw);$('reportStatus').textContent='Copiado!'}catch(e){$('reportStatus').textContent='Não foi possível copiar; use a visualização de texto.'}};
+function downloadReport(ext){if(!reportRaw)return;const stamp=new Date(),pad=(v,n=2)=>String(v).padStart(n,'0');const name=stamp.getFullYear()+'-'+pad(stamp.getMonth()+1)+'-'+pad(stamp.getDate())+'_'+pad(stamp.getHours())+'-'+pad(stamp.getMinutes())+'-'+pad(stamp.getSeconds())+'-'+pad(stamp.getMilliseconds(),3);let content=reportRaw;
+if(ext==='html'){const old=reportPlain;reportPlain=false;renderReport();content='<!doctype html><html lang="pt-BR"><meta charset="utf-8"><title>WMK Relatório</title><style>body{font:16px Arial;max-width:1000px;margin:30px auto;padding:15px}table{border-collapse:collapse;width:100%}td,th{border:1px solid #aaa;padding:8px;overflow-wrap:anywhere}</style><body><h1>WMK Intelligence</h1>'+$('reportText').innerHTML+'</body></html>';reportPlain=old;renderReport()}
+const url=URL.createObjectURL(new Blob([content],{type:ext==='html'?'text/html;charset=utf-8':'text/plain;charset=utf-8'})),a=el('a');a.href=url;a.download='wmk-relatorio-'+name+'-'+crypto.randomUUID().slice(0,8)+'.'+ext;a.click();setTimeout(()=>URL.revokeObjectURL(url),1000)}
+$('downloadReport').onclick=()=>downloadReport('txt');$('downloadMd').onclick=()=>downloadReport('md');$('downloadHtml').onclick=()=>downloadReport('html');
 $('registerAgent').onclick=async()=>{if(!confirm('Registrar um agente REAL no Moltbook? Será necessária ativação humana.'))return;let out=$('registerResult');out.textContent='Solicitando...';try{const r=await request('/api/register',{source:'moltbook',name:$('agentName').value,description:$('agentDescription').value});out.textContent=JSON.stringify(r,null,2)+'\nNÃO COMPARTILHE A CHAVE'}catch(e){out.textContent=e.message}};
 const panels=[...document.querySelectorAll('.panel')];let z=5;
 function save(){localStorage.setItem('wmk-layout-v1',JSON.stringify(panels.map(p=>({id:p.id,left:p.style.left,top:p.style.top,width:p.style.width,height:p.style.height,display:p.style.display}))))}
