@@ -135,6 +135,9 @@ class Handler(BaseHTTPRequestHandler):
         target=ROOT/'assets'/path.lstrip('/') if path in ('/cognitryx.png','/logo.svg','/wmk_logo.png','/wmk_logo_capa.png','/coretrix.png','/nexus-brain.jpg','/database-lab.png') else ROOT/'web'/path.lstrip('/')
         if not target.is_file():return self.send_json({'erro':'Arquivo não encontrado'},404)
         data=target.read_bytes()
+        if path=='/cognitryx.png' and not target.is_file():
+            target=ROOT/'web'/'scene-brain.svg'
+            path='/scene-brain.svg'
         content_type='text/html' if path.endswith('.html') else 'text/javascript' if path.endswith('.js') else 'text/css' if path.endswith('.css') else 'image/png' if path.endswith('.png') else 'image/jpeg' if path.endswith(('.jpg','.jpeg')) else 'image/svg+xml'
         self.send_response(200)
         self.send_header('Content-Type',content_type if content_type.startswith('image/') else content_type+'; charset=utf-8')
