@@ -22,6 +22,7 @@ def ask(provider,system,data):
     else:payload['max_completion_tokens']=500
     class NoRedirect(urllib.request.HTTPRedirectHandler):
         def redirect_request(self,*args,**kwargs):raise ValueError('Redirecionamento bloqueado')
+    headers.update({'User-Agent':'WMK-Intelligence/0.3.0','Accept':'application/json'})
     req=urllib.request.Request(url,data=json.dumps(payload).encode(),headers=headers)
     with urllib.request.build_opener(NoRedirect()).open(req,timeout=90) as response:
         result=json.load(response)
