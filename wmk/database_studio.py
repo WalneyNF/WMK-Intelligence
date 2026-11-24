@@ -20,7 +20,7 @@ def catalog():
 def query(sql):
     if not isinstance(sql,str) or not sql.strip() or len(sql)>8000:raise ValueError('Consulta inválida')
     with closing(connect_ro()) as c:
-        functions={'count','sum','avg','min','max','length','substr','substring','lower','upper','coalesce','ifnull','round','date','strftime','like','trim','replace','abs','typeof','group_concat','nullif','instr','total'}
+        functions={'count','sum','avg','min','max','length','substr','substring','lower','upper','coalesce','ifnull','round','date','strftime','like','trim','replace','abs','typeof','group_concat','nullif','instr','total','json_valid','json_extract','json_type'}
         def authorize(action,a,b,db,trigger):
             if action==sqlite3.SQLITE_SELECT:return sqlite3.SQLITE_OK
             if action==sqlite3.SQLITE_READ and (db=='main' or (db is None and b=='')) and a in TABLES:return sqlite3.SQLITE_OK
@@ -67,3 +67,17 @@ def copilot(body):
     sql=re.sub(r'^\s*```(?:sql)?\s*|\s*```\s*$','',answer.strip(),flags=re.I)
     if len(sql)>8000 or not re.match(r'^\s*SELECT\b',sql,re.I):raise ValueError('A IA não retornou SELECT válido')
     return {'sql':sql,'note':'Revise antes de executar. A consulta ainda não foi executada.'}
+
+def categories():
+    import json
+    from collections import Counter
+    with closing(connect_ro()) as c:
+        counts=Counter()
+        indexed=0
+        for row in c.execute('SELECT topics FROM knowledge_memory'):
+            indexed+=1
+            try: tags=json.loads(row[0] or '{}')
+            except (ValueError,TypeError): tags={}
+            if isinstance(tags,dict) and tags: counts.update(tags.keys())
+            else: counts['Não classificado']+=1
+        return {'indexed':indexed,'items':[{'category':k,'total':v} for k,v in counts.most_common()],'method':'lexical-index','multi_label':True}
