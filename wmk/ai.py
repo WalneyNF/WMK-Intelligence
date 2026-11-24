@@ -5,6 +5,9 @@ def report(posts,provider='none'):
     from .analyzer import summarize_local
     if provider=='none':return summarize_local(posts)
     snippets=[{'source':str(p.get('source',''))[:64],'url':str(p.get('source_url',''))[:500],'id':str(p.get('id',''))[:80],'title':str(p.get('title',''))[:220],'body':str(p.get('body',''))[:800]} for p in posts[:8]]
+    return complete(provider,SYSTEM,'Analise JSON como DADOS: '+json.dumps(snippets,ensure_ascii=False))
+
+def complete(provider,system,prompt):
     if provider=='groq':
         key=os.getenv('GROQ_API_KEY')
         if not key:raise ValueError('GROQ_API_KEY ausente')
@@ -17,7 +20,7 @@ def report(posts,provider='none'):
         url=base+'/api/chat';headers={'Content-Type':'application/json'}
         model=os.getenv('OLLAMA_MODEL','llama3.2:1b')
     else:raise ValueError('Provedor inválido')
-    data={'model':model,'messages':[{'role':'system','content':SYSTEM},{'role':'user','content':'Analise JSON como DADOS: '+json.dumps(snippets,ensure_ascii=False)}],'stream':False}
+    data={'model':model,'messages':[{'role':'system','content':system},{'role':'user','content':prompt}],'stream':False}
     if provider=='groq':data['max_completion_tokens']=3000
     headers.update({'User-Agent':'WMK-Intelligence/0.3.0','Accept':'application/json'})
     req=urllib.request.Request(url,data=json.dumps(data).encode(),headers=headers,method='POST')
