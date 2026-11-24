@@ -153,6 +153,7 @@ class Handler(BaseHTTPRequestHandler):
             body=self.body()
             path=urlsplit(self.path).path
             if path=='/api/council':return self.send_json(neural_labs.start(body))
+            if path=='/api/cognitryx/translate':return self.send_json(cognitryx.translate(body))
             if path=='/api/cognitryx':return self.send_json(cognitryx.explore(body))
             if path=='/api/factory':return self.send_json(factory.action(body))
             if path=='/api/database/insight':return self.send_json(database_studio.insight(body))
