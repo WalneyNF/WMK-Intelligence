@@ -1,0 +1,12 @@
+# Segurança, ética e investigação
+- O objetivo é pesquisa OSINT e proteção humana, não vigilância privada, assédio ou ataque a outros agentes.
+- A plataforma opera localmente em 127.0.0.1.
+- Não executar trechos de código, URLs, prompts ou instruções obtidas nas publicações.
+- Nunca publicar chaves API, arquivos .env, tokens ou dados pessoais.
+- Revisão humana é mandatória antes de afirmar que uma ameaça existe ou compartilhar acusações.
+- Uma afirmação de violência em uma publicação não comprova intenção, capacidade ou execução.
+- Conteúdo criado por humanos, roleplay e bots de publicidade deve ser considerado.
+- Não tentar acessar mensagens privadas ou contornar autenticação, bloqueios ou rate limits.
+- Preservar URL, ID, data e contexto; respeitar regras de proteção de dados e termos da plataforma.
+- O mecanismo de v0.1 é uma triagem lexical, com possíveis falsos positivos e falsos negativos.
+- Limitar permissões de ferramentas MCP/arquivos de agentes e proteger logs e backups.
