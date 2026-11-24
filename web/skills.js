@@ -1,0 +1,13 @@
+const $=id=>document.getElementById(id);let current='',items=[];
+const fields={name:'Nome',category:'Categoria',description:'Descrição',prompt:'Prompt',agents:'Agentes',inputs:'Entradas',outputs:'Saídas',tools:'Ferramentas declaradas',mcp:'MCP declarado',version:'Versão'};
+for(const [key,title] of Object.entries(fields)){const l=document.createElement('label');l.textContent=title;const e=document.createElement(['prompt','description'].includes(key)?'textarea':'input');e.id='f_'+key;e.required=['name','prompt'].includes(key);l.append(e);$('fields').append(l)}
+function edit(s={}){current=s.id||'';for(const k of Object.keys(fields))$('f_'+k).value=typeof s[k]==='string'?s[k]:'';$('active').checked=s.active===true;$('delete').disabled=!current}
+function data(){return Object.fromEntries([...Object.keys(fields).map(k=>[k,$('f_'+k).value]),['active',$('active').checked]])}
+async function api(body){const r=await fetch('/api/skills',body?{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)}:{});const j=await r.json();if(!r.ok)throw Error(j.erro||'Falha');return j}
+async function refresh(){items=(await api()).skills;$('list').replaceChildren();for(const s of items){const b=document.createElement('button');b.textContent=s.name+' · '+s.category;b.onclick=()=>edit(s);$('list').append(b)}}
+async function run(fn){try{await fn();$('status').textContent='Operação concluída'}catch(e){$('status').textContent=e.message}}
+$('new').onclick=()=>edit();$('form').onsubmit=e=>{e.preventDefault();run(async()=>{const j=await api({op:current?'update':'create',id:current,skill:data()});edit(j.skill);await refresh()})};
+$('duplicate').onclick=()=>{const s=data();s.name+=' (cópia)';edit(s)};
+$('delete').onclick=()=>{if(current&&confirm('Excluir somente esta skill?'))run(async()=>{await api({op:'delete',id:current});edit();await refresh()})};
+$('export').onclick=()=>{const u=URL.createObjectURL(new Blob([JSON.stringify(data(),null,2)],{type:'application/json'}));const a=document.createElement('a');a.href=u;a.download='skill.json';a.click();setTimeout(()=>URL.revokeObjectURL(u),1000)};
+$('import').onchange=()=>run(async()=>{const f=$('import').files[0];if(!f||f.size>20000)throw Error('Arquivo inválido');const s=JSON.parse(await f.text());if(!s||typeof s!=='object'||Array.isArray(s))throw Error('Objeto esperado');edit({...s,id:'',active:false})});edit();run(refresh);
