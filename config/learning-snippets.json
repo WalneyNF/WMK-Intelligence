@@ -1,0 +1,112 @@
+[
+  {
+    "name": "Total",
+    "language": "sql",
+    "code": "SELECT count(*) AS total FROM items"
+  },
+  {
+    "name": "Comunidades",
+    "language": "sql",
+    "code": "SELECT community,count(*) AS total FROM items GROUP BY community ORDER BY total DESC"
+  },
+  {
+    "name": "Fontes",
+    "language": "sql",
+    "code": "SELECT source,count(*) AS total FROM items GROUP BY source"
+  },
+  {
+    "name": "Dias",
+    "language": "sql",
+    "code": "SELECT substr(captured_at,1,10) AS dia,count(*) AS total FROM items GROUP BY dia ORDER BY dia"
+  },
+  {
+    "name": "Python",
+    "language": "sql",
+    "code": "SELECT id,title FROM items WHERE lower(body) LIKE '%python%' LIMIT 100"
+  },
+  {
+    "name": "RAG",
+    "language": "sql",
+    "code": "SELECT id,title FROM items WHERE lower(body) LIKE '%rag%' LIMIT 100"
+  },
+  {
+    "name": "Links",
+    "language": "sql",
+    "code": "SELECT id,title FROM items WHERE body LIKE '%https://%' LIMIT 100"
+  },
+  {
+    "name": "Textos vazios",
+    "language": "sql",
+    "code": "SELECT id,title FROM items WHERE body IS NULL OR length(trim(body))=0 LIMIT 100"
+  },
+  {
+    "name": "JS: Saúde",
+    "language": "javascript",
+    "code": "const response = await fetch('/api/health');\nif (!response.ok) throw new Error(response.status);\nconsole.log(await response.json());"
+  },
+  {
+    "name": "Python: Saúde",
+    "language": "python",
+    "code": "import json\nfrom urllib.request import urlopen\nwith urlopen(\"http://127.0.0.1:8767/api/health\", timeout=15) as response:\n    dados = json.load(response)\nprint(json.dumps(dados, ensure_ascii=False, indent=2))"
+  },
+  {
+    "name": "JS: Estatísticas",
+    "language": "javascript",
+    "code": "const response = await fetch('/api/stats');\nif (!response.ok) throw new Error(response.status);\nconsole.log(await response.json());"
+  },
+  {
+    "name": "Python: Estatísticas",
+    "language": "python",
+    "code": "import json\nfrom urllib.request import urlopen\nwith urlopen(\"http://127.0.0.1:8767/api/stats\", timeout=15) as response:\n    dados = json.load(response)\nprint(json.dumps(dados, ensure_ascii=False, indent=2))"
+  },
+  {
+    "name": "JS: Fontes",
+    "language": "javascript",
+    "code": "const response = await fetch('/api/sources');\nif (!response.ok) throw new Error(response.status);\nconsole.log(await response.json());"
+  },
+  {
+    "name": "Python: Fontes",
+    "language": "python",
+    "code": "import json\nfrom urllib.request import urlopen\nwith urlopen(\"http://127.0.0.1:8767/api/sources\", timeout=15) as response:\n    dados = json.load(response)\nprint(json.dumps(dados, ensure_ascii=False, indent=2))"
+  },
+  {
+    "name": "JS: Esquema",
+    "language": "javascript",
+    "code": "const response = await fetch('/api/database/catalog');\nif (!response.ok) throw new Error(response.status);\nconsole.log(await response.json());"
+  },
+  {
+    "name": "Python: Esquema",
+    "language": "python",
+    "code": "import json\nfrom urllib.request import urlopen\nwith urlopen(\"http://127.0.0.1:8767/api/database/catalog\", timeout=15) as response:\n    dados = json.load(response)\nprint(json.dumps(dados, ensure_ascii=False, indent=2))"
+  },
+  {
+    "name": "JS: Categorias",
+    "language": "javascript",
+    "code": "const response = await fetch('/api/database/categories');\nif (!response.ok) throw new Error(response.status);\nconsole.log(await response.json());"
+  },
+  {
+    "name": "Python: Categorias",
+    "language": "python",
+    "code": "import json\nfrom urllib.request import urlopen\nwith urlopen(\"http://127.0.0.1:8767/api/database/categories\", timeout=15) as response:\n    dados = json.load(response)\nprint(json.dumps(dados, ensure_ascii=False, indent=2))"
+  },
+  {
+    "name": "JS: Memória",
+    "language": "javascript",
+    "code": "const response = await fetch('/api/memory?q=python');\nif (!response.ok) throw new Error(response.status);\nconsole.log(await response.json());"
+  },
+  {
+    "name": "Python: Memória",
+    "language": "python",
+    "code": "import json\nfrom urllib.request import urlopen\nwith urlopen(\"http://127.0.0.1:8767/api/memory?q=python\", timeout=15) as response:\n    dados = json.load(response)\nprint(json.dumps(dados, ensure_ascii=False, indent=2))"
+  },
+  {
+    "name": "JS: Publicações",
+    "language": "javascript",
+    "code": "const response = await fetch('/api/posts?limit=10');\nif (!response.ok) throw new Error(response.status);\nconsole.log(await response.json());"
+  },
+  {
+    "name": "Python: Publicações",
+    "language": "python",
+    "code": "import json\nfrom urllib.request import urlopen\nwith urlopen(\"http://127.0.0.1:8767/api/posts?limit=10\", timeout=15) as response:\n    dados = json.load(response)\nprint(json.dumps(dados, ensure_ascii=False, indent=2))"
+  }
+]
