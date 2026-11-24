@@ -1,0 +1,22 @@
+[
+  {
+    "id": "estatisticas",
+    "name": "Comunidades",
+    "description": "Counter: frequência por comunidade."
+  },
+  {
+    "id": "recursos",
+    "name": "Links e recursos",
+    "description": "Regex: URLs encontradas, sem acessar a internet."
+  },
+  {
+    "id": "palavras",
+    "name": "Frequência de termos",
+    "description": "Contagem de documentos por palavra."
+  },
+  {
+    "id": "duplicados",
+    "name": "Duplicados exatos",
+    "description": "SHA-256 do texto normalizado."
+  }
+]
