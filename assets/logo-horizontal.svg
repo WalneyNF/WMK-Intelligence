@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1500" height="580" viewBox="0 0 1500 580" role="img" aria-labelledby="title desc">
+<title id="title">WMK Intelligence — Projeto Guardiões</title>
+<desc id="desc">Emblema de proteção humana, robô guardião em armadura, Terra conectada, escudo e identidade do observatório global de redes e agentes de IA.</desc>
+<defs>
+ <radialGradient id="space"><stop stop-color="#164668"/><stop offset=".56" stop-color="#0b2645"/><stop offset="1" stop-color="#030914"/></radialGradient>
+ <linearGradient id="silver" x1="0" y1="0" x2=".8" y2="1"><stop stop-color="#f5ffff"/><stop offset=".25" stop-color="#7abed8"/><stop offset=".5" stop-color="#173e61"/><stop offset=".78" stop-color="#cdf9ff"/><stop offset="1" stop-color="#4c86a5"/></linearGradient>
+ <linearGradient id="cyan" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#91fcff"/><stop offset=".5" stop-color="#0ce4f6"/><stop offset="1" stop-color="#0885e4"/></linearGradient>
+ <radialGradient id="planet" cx=".38" cy=".32"><stop stop-color="#68fbff"/><stop offset=".4" stop-color="#087ebd"/><stop offset="1" stop-color="#031a38"/></radialGradient>
+ <filter id="glow"><feGaussianBlur stdDeviation="8"/></filter>
+ <pattern id="grid" width="42" height="42" patternUnits="userSpaceOnUse"><path d="M42 0H0V42" stroke="#48e8fa" stroke-width=".7" opacity=".13" fill="none"/></pattern>
+</defs>
+<rect width="1500" height="580" rx="28" fill="url(#space)"/>
+<rect width="1500" height="580" rx="28" fill="url(#grid)"/>
+<path d="M0 420Q390 170 760 460T1500 300" stroke="#27bdd4" stroke-width="3" opacity=".22" fill="none"/>
+<path d="M0 520Q460 310 860 530T1500 370" stroke="#27bdd4" stroke-width="2" opacity=".15" fill="none"/>
+<g fill="#8ce8fe" opacity=".85">
+ <circle cx="95" cy="105" r="3"/><circle cx="178" cy="190" r="3"/><circle cx="80" cy="350" r="3"/><circle cx="430" cy="45" r="3"/>
+ <circle cx="1418" cy="104" r="4"/><circle cx="1260" cy="440" r="3"/><circle cx="1170" cy="85" r="3"/><circle cx="1380" cy="520" r="3"/>
+</g>
+<g stroke="#56bbdd" stroke-width="2" fill="none" opacity=".4">
+ <path d="M95 105L178 190L80 350L275 420M1418 104L1280 180L1380 310L1260 440L1380 520M1170 85L1280 180"/>
+ <circle cx="178" cy="190" r="11"/><circle cx="1280" cy="180" r="11"/><circle cx="1380" cy="310" r="13"/>
+</g>
+<g transform="translate(287 288)">
+ <circle r="230" stroke="#04d4f2" stroke-width="18" fill="none" opacity=".20" filter="url(#glow)"/>
+ <circle r="229" stroke="url(#cyan)" stroke-width="5" fill="none" opacity=".65"/>
+ <circle r="196" stroke="#1e85a9" stroke-width="2" fill="none" stroke-dasharray="9 9" opacity=".6"/>
+ <path d="M0-203L169-141L154 62Q119 170 0 219Q-119 170-154 62L-169-141Z" fill="#07192e" stroke="url(#silver)" stroke-width="15"/>
+ <path d="M0-178L143-124L129 55Q101 146 0 187Q-101 146-129 55L-143-124Z" fill="#0b263d" stroke="#06ddf8" stroke-width="3"/>
+ <circle cx="0" cy="48" r="105" fill="url(#planet)" stroke="#43e4ff" stroke-width="4"/>
+ <g stroke="#a3ffff" stroke-width="1.8" opacity=".75" fill="none">
+  <ellipse cx="0" cy="48" rx="49" ry="105"/><path d="M-101 48H101M-93 3H93M-92 92H92"/>
+ </g>
+ <path d="M-50 2L-30-15L-2-6L3 15L39 21L46 44L17 47L9 65L-23 68L-31 41L-56 29Z" fill="#64ead7" opacity=".7"/>
+ <path d="M43 100L66 90L73 108L54 137L37 127Z" fill="#64ead7" opacity=".65"/>
+ <g fill="#f3fcff">
+  <circle cx="-65" cy="86" r="12"/><path d="M-87 125q2-26 22-26t22 26v17h-44z"/>
+  <circle cx="0" cy="91" r="16"/><path d="M-28 137q0-33 28-33t28 33v15h-56z"/>
+  <circle cx="65" cy="86" r="12"/><path d="M43 125q2-26 22-26t22 26v17H43z"/>
+ </g>
+ <path d="M-82-136L-63-180L-25-186L0-166L25-186L63-180L82-136L60-98H-60Z" fill="url(#silver)" stroke="#47ecff" stroke-width="5"/>
+ <path d="M-53-151L-21-149L0-137L21-149L53-151L38-126L7-119H-7L-38-126Z" fill="#051326"/>
+ <path d="M-51-151L-17-147L-10-139L-43-139Z M51-151L17-147L10-139L43-139Z" fill="#37f8ff" filter="url(#glow)"/>
+ <path d="M-51-151L-17-147L-10-139L-43-139Z M51-151L17-147L10-139L43-139Z" fill="#6cffff"/>
+ <text x="0" y="-164" text-anchor="middle" fill="#042b43" font-family="Segoe UI,Arial" font-size="20" font-weight="900">WMK</text>
+</g>
+<g transform="translate(595 95)" font-family="Segoe UI,Arial,sans-serif">
+ <text x="0" y="68" font-size="80" letter-spacing="3" font-weight="900" fill="url(#silver)">WMK INTELLIGENCE</text>
+ <path d="M0 88H810" stroke="url(#cyan)" stroke-width="5"/>
+ <text x="2" y="142" font-size="40" font-weight="800" letter-spacing="7" fill="#8eecff">PROJETO GUARDIÕES</text>
+ <text x="2" y="204" font-size="26" font-weight="650" fill="#eef8ff">OBSERVATÓRIO GLOBAL DE REDES E AGENTES DE IA</text>
+ <text x="2" y="253" font-size="22" fill="#a4d3e9">Inteligência e cibersegurança a serviço dos humanos</text>
+ <rect x="0" y="280" width="815" height="79" rx="13" fill="#0a2b46" stroke="#1aaad1" stroke-width="2"/>
+ <text x="407" y="329" text-anchor="middle" font-size="24" letter-spacing="2" font-weight="700" fill="#e3fbff">OBSERVAR  ·  INVESTIGAR  ·  INFORMAR  ·  PROTEGER</text>
+ <text x="0" y="416" font-size="18" fill="#9ebdd2">Código aberto · Licença MIT · Transparência · Supervisão humana</text>
+</g>
+</svg>
