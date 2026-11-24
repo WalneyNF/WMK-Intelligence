@@ -9,7 +9,7 @@ from .sources import list_sources,get_adapter
 from .analyzer import classify
 from .ai import report,complete
 from . import studio,nexus,command,research,cyber,radar,discovery,memory
-from . import arena,skills,data_export,analytrix,reactor,refinery,database_studio,factory,cognitryx
+from . import arena,skills,data_export,analytrix,reactor,refinery,database_studio,factory,cognitryx,neural_labs
 
 import threading,time
 from datetime import datetime
@@ -89,6 +89,9 @@ class Handler(BaseHTTPRequestHandler):
                     self.send_header('Cache-Control','no-store')
                     self.send_header('X-Content-Type-Options','nosniff')
                     self.end_headers();self.wfile.write(data);return
+                if path=='/api/universe':return self.send_json(neural_labs.universe(q.get('q',[''])[0],q.get('limit',['1000'])[0]))
+                if path=='/api/council/history':return self.send_json(neural_labs.history())
+                if path=='/api/council/get':return self.send_json(neural_labs.get(q.get('id',[''])[0]))
                 if path=='/api/factory':return self.send_json(factory.catalog())
                 if path=='/api/factory/get':return self.send_json(factory.get(q.get('id',[''])[0]))
                 if path=='/api/factory/related':return self.send_json(factory.related(q.get('source',[''])[0],q.get('id',[''])[0]))
@@ -130,7 +133,7 @@ class Handler(BaseHTTPRequestHandler):
                 return self.send_json({'erro':'Falha ao consultar fonte'},502)
         if path=='/assets/nexus-brain.jpg':path='/nexus-brain.jpg'
         if path=='/':path='/prime.html'
-        if path not in ('/cognitryx.html','/cognitryx.js','/cognitryx.png','/index.html','/app.js','/style.css','/logo.svg','/wmk_logo.png','/wmk_logo_capa.png','/arena.html','/arena.js','/arena-manual.html','/propostas.html','/nexus.html','/nexus.js','/nexus-manual.html','/command.html','/command.css','/command.js','/research.html','/research.js','/cyber.html','/cyber.js','/cyber-manual.html','/radar.html','/radar.js','/radar-manual.html','/discovery.html','/discovery.js','/discovery-manual.html','/memory.html','/memory.js','/memory-manual.html','/skills.html','/skills.js','/export.html','/analytrix.html','/analytrix.js','/reactor.html','/reactor.js','/coretrix.png','/nexus-brain.jpg','/refinery.html','/refinery.js','/refinery-manual.html','/prime.html','/prime.js','/labs.html','/labs.js','/living.html','/living.js','/scene-brain.svg','/scene-dna.svg','/scene-network.svg','/scene-globe.svg','/scene-galaxy.svg','/scene-reactor.svg','/scene-factory.svg','/scene-archive.svg','/scene-time.svg','/database-studio.html','/database-studio.js','/operations.html','/operations.js','/database-lab.png'):
+        if path not in ('/universe.html','/universe.js','/council.html','/council.js','/cognitryx.html','/cognitryx.js','/cognitryx.png','/index.html','/app.js','/style.css','/logo.svg','/wmk_logo.png','/wmk_logo_capa.png','/arena.html','/arena.js','/arena-manual.html','/propostas.html','/nexus.html','/nexus.js','/nexus-manual.html','/command.html','/command.css','/command.js','/research.html','/research.js','/cyber.html','/cyber.js','/cyber-manual.html','/radar.html','/radar.js','/radar-manual.html','/discovery.html','/discovery.js','/discovery-manual.html','/memory.html','/memory.js','/memory-manual.html','/skills.html','/skills.js','/export.html','/analytrix.html','/analytrix.js','/reactor.html','/reactor.js','/coretrix.png','/nexus-brain.jpg','/refinery.html','/refinery.js','/refinery-manual.html','/prime.html','/prime.js','/labs.html','/labs.js','/living.html','/living.js','/scene-brain.svg','/scene-dna.svg','/scene-network.svg','/scene-globe.svg','/scene-galaxy.svg','/scene-reactor.svg','/scene-factory.svg','/scene-archive.svg','/scene-time.svg','/database-studio.html','/database-studio.js','/operations.html','/operations.js','/database-lab.png'):
             return self.send_json({'erro':'Arquivo não encontrado'},404)
         target=ROOT/'assets'/path.lstrip('/') if path in ('/cognitryx.png','/logo.svg','/wmk_logo.png','/wmk_logo_capa.png','/coretrix.png','/nexus-brain.jpg','/database-lab.png') else ROOT/'web'/path.lstrip('/')
         if path=='/cognitryx.png' and not target.is_file():
@@ -149,6 +152,7 @@ class Handler(BaseHTTPRequestHandler):
         try:
             body=self.body()
             path=urlsplit(self.path).path
+            if path=='/api/council':return self.send_json(neural_labs.start(body))
             if path=='/api/cognitryx':return self.send_json(cognitryx.explore(body))
             if path=='/api/factory':return self.send_json(factory.action(body))
             if path=='/api/database/insight':return self.send_json(database_studio.insight(body))
