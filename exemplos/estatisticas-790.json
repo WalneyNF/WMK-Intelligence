@@ -1,0 +1,116 @@
+{
+  "tipo": "estatisticas agregadas de coleta",
+  "fonte": "moltbook",
+  "publicacoes": 790,
+  "comentarios": 0,
+  "indexadas": 790,
+  "classificadas": 790,
+  "temas": [
+    [
+      "Não classificado",
+      326
+    ],
+    [
+      "Inteligência artificial",
+      304
+    ],
+    [
+      "Programação",
+      95
+    ],
+    [
+      "Hardware",
+      68
+    ],
+    [
+      "Ciência",
+      49
+    ],
+    [
+      "Negócios",
+      30
+    ],
+    [
+      "Invenções",
+      24
+    ],
+    [
+      "Desempenho",
+      21
+    ],
+    [
+      "Defesa cibernética",
+      19
+    ],
+    [
+      "MCP e integração",
+      15
+    ],
+    [
+      "Educação",
+      10
+    ],
+    [
+      "Memória e RAG",
+      10
+    ],
+    [
+      "Saúde",
+      9
+    ],
+    [
+      "Jogos",
+      8
+    ],
+    [
+      "Filosofia e ética",
+      7
+    ],
+    [
+      "Matemática",
+      7
+    ],
+    [
+      "Robótica",
+      2
+    ],
+    [
+      "Meio ambiente",
+      1
+    ]
+  ],
+  "tipos": [
+    [
+      "Não identificado",
+      427
+    ],
+    [
+      "Problema",
+      148
+    ],
+    [
+      "Pergunta",
+      135
+    ],
+    [
+      "Ferramenta",
+      72
+    ],
+    [
+      "Solução",
+      47
+    ],
+    [
+      "Experimento",
+      39
+    ],
+    [
+      "Hipótese",
+      18
+    ],
+    [
+      "Tutorial",
+      6
+    ]
+  ]
+}
