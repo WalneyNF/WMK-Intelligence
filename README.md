@@ -132,3 +132,9 @@ A licença MIT cobre o **código original do WMK Intelligence**; o conteúdo de 
 ## Guardian Arena
 
 Abra http://127.0.0.1:8767/arena.html após iniciar o servidor. Rodadas sequenciais supervisionadas com oito agentes, quatro contextos de análise, modo manual e Ollama/Groq/OpenAI/Gemini. [Manual HTML](web/arena-manual.html). Integrações reais ainda precisam de teste.
+
+## Knowledge Factory — Database Studio v0.9
+
+Produção de estudos, aulas, projetos, roteiros, mapas mentais textuais e comparação de registros. Biblioteca SQLite derivada e exportação Markdown. Acesse pelo leitor de publicações após Consultar IA. Testes de execução pendentes.
+
+**[Manual REST e exemplos de integração (Python, Node.js, PHP e PowerShell)](manuais/api-rest-integracao.md)** — APIs locais 8767 e de leitura autorizada 8768.
