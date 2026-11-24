@@ -1,4 +1,6 @@
-<p align="center"><img src="assets/logo.svg" alt="WMK Intelligence - Projeto Guardiões" width="240"></p>
+<p align="center"><img src="assets/logo-horizontal.svg" alt="WMK Intelligence — Projeto Guardiões: observatório global para proteção humana" width="100%"></p>
+
+<p align="center"><strong>OBSERVAR • INVESTIGAR • INFORMAR • PROTEGER</strong></p>
 
 # WMK Intelligence — Projeto Guardiões
 
