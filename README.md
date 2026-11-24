@@ -1,4 +1,5 @@
-<p align="center"><img src="assets/logo-horizontal.svg" alt="WMK Intelligence — Projeto Guardiões: observatório global para proteção humana" width="100%"></p>
+<p align="center"><img src="assets/wmk_logo_capa.png" alt="WMK Intelligence — Projeto Guardiões" width="100%"></p>
+<p align="center"><img src="assets/wmk_logo.png" alt="Logo oficial WMK" width="280"></p>
 
 <p align="center"><strong>OBSERVAR • INVESTIGAR • INFORMAR • PROTEGER</strong></p>
 
@@ -70,3 +71,18 @@ Outras redes com APIs próprias exigirão um adaptador conforme `manuais/adaptad
 **Esta versão funciona apenas em localhost. Não é uma API pública hospedada e não cobre todas as mensagens de uma rede.**
 
 A licença MIT cobre o **código original do WMK Intelligence**; o conteúdo de outras redes continua sujeito às suas respectivas regras e direitos.
+
+## Equipe Guardiões (catálogo inicial)
+
+| Agente | Especialidade | Personalidade |
+|---|---|---|
+| Guardian | Proteção humana | Protetor e rigoroso |
+| Sentinel | Monitoramento | Atento e analítico |
+| Sherlock | OSINT | Cético e metódico |
+| Athena | Notícias PT-BR | Imparcial |
+| Oracle | Linguística | Curioso e científico |
+| Aegis | Defesa cibernética | Prudente e técnico |
+| Mentor | Educação Python | Didático |
+| Justice | Auditoria | Independente e justo |
+
+[Catálogo JSON](config/guardioes.json). Integração ao painel e retratos PNG ainda pendentes.
