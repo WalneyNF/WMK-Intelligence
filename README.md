@@ -13,8 +13,32 @@ Projeto brasileiro para coletar **informações públicas autorizadas** de vári
 
 **Autor:** Walney Moreira Klein — walneyk@hotmail.com  
 **Licença do código original:** MIT  
-**Versão experimental:** 0.3.0  
+**Versão experimental da central:** NEXUS PRIME v0.6 — ERA 7000  
 **Tecnologias:** Python 3.10+, SQLite, HTML/CSS/JavaScript; Groq e Ollama opcionais; **sem Docker**.
+
+## NEXUS PRIME — ERA 7000
+
+O WMK Intelligence evoluiu para um Web App científico com uma central visual, núcleo cerebral animado e 20 monitores periféricos clicáveis. Os ambientes Living ERA 7000 dão acesso às ferramentas existentes, com animações Canvas, tela cheia e detalhes sob demanda.
+
+A captura da interface será disponibilizada em `assets/nexus-prime-screenshot.png`. A imagem central utilizada pelo aplicativo deve estar em `assets/nexus-brain.jpg` (arquivo visual distribuído separadamente nesta etapa).
+
+### Ambientes operacionais
+
+| Ambiente | Função atual |
+|---|---|
+| CORETRIX | Contadores de coleta, indexação e classificação |
+| MEMORYX | Pesquisa textual na memória |
+| ANALYTRIX | Classificação temática lexical |
+| CYBER EYE | Radar de referências de segurança |
+| DISCOVERY | Exploração temática |
+| REFINERY | Indicadores derivados |
+| SCIENTRYX, INVENTRYX, VERITRON | Exploração de hipóteses, soluções e menções a experimentos |
+| LEXORYN, SYNAPTRIX, CHRONYX | Biblioteca, categorias e histórico |
+| Skill Forge, Arena, Nexus | Skills, agentes e missões |
+| Research, Academy, Cyber Academy | Pesquisa e educação |
+| Data Export, Mission Control, Data Control | Exportação, operação e administração |
+
+As animações ambientais são ilustrativas; os contadores disponíveis são derivados da base local. Experimentos autônomos, memória semântica e orquestração persistente permanecem em evolução.
 
 ## Recursos implementados
 
@@ -33,7 +57,7 @@ Projeto brasileiro para coletar **informações públicas autorizadas** de vári
 2. Execute `instalar.bat` para gerar `.env` a partir de `.env.example`.
 3. Execute `iniciar.bat`.
 4. Acesse **http://127.0.0.1:8767**.
-5. Abra **Fontes e redes** para ver os conectores. Em **Visão geral**, selecione uma fonte e clique em **Coletar publicações**.
+5. Na central, abra **Administração** para acessar o painel clássico. Abra **Fontes e redes** para ver os conectores. Em **Visão geral**, selecione uma fonte e clique em **Coletar publicações**.
 
 A API do Moltbook poderá exigir `MOLTBOOK_API_KEY` no arquivo local `.env`. Não coloque credenciais no GitHub. Para Groq, configure `GROQ_API_KEY`. Para Ollama, mantenha o serviço local ativo.
 
@@ -53,9 +77,14 @@ Outras redes com APIs próprias exigirão um adaptador conforme `manuais/adaptad
 | Guardian | Triagem e revisão humana | Inicial |
 | Investigation | Preservação de evidências e análises | Planejado |
 | Academy | Guias e exemplos para iniciantes | Documentado |
-| Open Data | API externa versionada e pública | Planejado |
+| Open Data | API local versionada somente leitura, com chave | Experimental |
 
 ## Documentação
+
+- [Living Labs](manuais/living-labs.html)
+- [Política oficial de dados](manuais/politica-oficial-projeto.html)
+- [Design organismo digital](manuais/design-organismo-digital.html)
+- [Neural Memory somente leitura](manuais/politica-memoria-somente-leitura.html)
 
 - [Manual do primeiro contato](manuais/primeiro-contato.md)
 - [Arquitetura de conectores](manuais/adaptadores.md)
